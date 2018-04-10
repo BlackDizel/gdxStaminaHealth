@@ -1,5 +1,6 @@
 package org.byters.game.agilityhealth.view.presenter;
 
+import org.byters.engine.controller.ControllerCamera;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheHero;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheMeta;
 
@@ -7,12 +8,16 @@ import java.lang.ref.WeakReference;
 
 public class PresenterScreenGame {
 
+    private WeakReference<ControllerCamera> refControllerCamera;
     private WeakReference<CacheMeta> refCacheMeta;
     private WeakReference<CacheHero> refCacheHero;
 
-    public PresenterScreenGame(CacheMeta cacheGame, CacheHero cacheHero) {
+    public PresenterScreenGame(CacheMeta cacheGame,
+                               CacheHero cacheHero,
+                               ControllerCamera controllerCamera) {
         this.refCacheHero = new WeakReference<>(cacheHero);
         this.refCacheMeta = new WeakReference<>(cacheGame);
+        this.refControllerCamera = new WeakReference<>(controllerCamera);
     }
 
     public float getHeroPosX() {
@@ -38,6 +43,10 @@ public class PresenterScreenGame {
                 refCacheMeta.get().heroMinY,
                 refCacheMeta.get().heroMaxX,
                 refCacheMeta.get().heroMaxY);
+
+
+        refControllerCamera.get().setPosition(refCacheHero.get().getHeroPosX(),refCacheHero.get().getHeroPosY(),0);
+
     }
 
     public void onMoveMode(boolean isRun) {

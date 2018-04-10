@@ -65,7 +65,9 @@ public class Injector {
     }
 
     private PresenterScreenGame getPresenterScreenGame() {
-        if (presenterScreenGame == null) presenterScreenGame = new PresenterScreenGame(getCacheMeta(), getCacheHero());
+        if (presenterScreenGame == null) presenterScreenGame = new PresenterScreenGame(getCacheMeta(),
+                getCacheHero(),
+                engine.getInjector().getControllerCamera());
         return presenterScreenGame;
     }
 
