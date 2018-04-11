@@ -52,4 +52,16 @@ public class PresenterScreenGame {
     public void onMoveMode(boolean isRun) {
         refCacheHero.get().setRun(isRun);
     }
+
+    public int getBonefirePosX() {
+        return refCacheMeta.get().borefirePosX;
+    }
+
+    public int getBonefirePosY() {
+        return refCacheMeta.get().borefirePosY;
+    }
+
+    public boolean isDrawDust() {
+        return refCacheHero.get().isRun();
+    }
 }

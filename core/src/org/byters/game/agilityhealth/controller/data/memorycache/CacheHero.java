@@ -52,6 +52,10 @@ public class CacheHero {
         deltaY = 0;
     }
 
+    public boolean isRun() {
+        return isRun && !(deltaY == 0 && deltaX == 0);
+    }
+
     public void setRun(boolean isRun) {
         this.isRun = isRun;
     }

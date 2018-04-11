@@ -7,7 +7,7 @@ import org.byters.game.agilityhealth.controller.data.memorycache.CacheMeta;
 import org.byters.game.agilityhealth.view.InputHelper;
 import org.byters.game.agilityhealth.view.InputSettings;
 import org.byters.game.agilityhealth.view.Navigator;
-import org.byters.game.agilityhealth.view.TextureHelper;
+import org.byters.game.agilityhealth.view.HelperResources;
 import org.byters.game.agilityhealth.view.presenter.IPresenterScreenMenu;
 import org.byters.game.agilityhealth.view.presenter.PresenterScreenGame;
 import org.byters.game.agilityhealth.view.presenter.PresenterScreenMenu;
@@ -24,13 +24,13 @@ public class Injector {
     private Navigator navigator;
     private CacheHero cacheHero;
     private InputHelper inputHelper;
-    private TextureHelper textureHelper;
+    private HelperResources textureHelper;
     private CacheMeta cacheMeta;
     private InputSettings inputSettings;
 
     private IScreen getScreenMenu() {
         if (screenMenu == null)
-            screenMenu = new ScreenMenu(getPresenterScreenMenu(), engine.getInjector().getControllerResources().getSpriteBatch(), getTextureHelper());
+            screenMenu = new ScreenMenu(getPresenterScreenMenu(), engine.getInjector().getControllerResources().getSpriteBatch(), getHelperResources());
         return screenMenu;
     }
 
@@ -40,7 +40,7 @@ public class Injector {
                     getInputSetting(),
                     getInputHelper(),
                     engine.getInjector().getControllerResources().getSpriteBatch(),
-                    getTextureHelper());
+                    getHelperResources());
         return screenGame;
     }
 
@@ -49,8 +49,8 @@ public class Injector {
         return inputSettings;
     }
 
-    private TextureHelper getTextureHelper() {
-        if (textureHelper == null) textureHelper = new TextureHelper();
+    private HelperResources getHelperResources() {
+        if (textureHelper == null) textureHelper = new HelperResources();
         return textureHelper;
     }
 

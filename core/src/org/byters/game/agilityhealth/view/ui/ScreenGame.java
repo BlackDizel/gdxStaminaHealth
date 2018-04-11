@@ -3,17 +3,18 @@ package org.byters.game.agilityhealth.view.ui;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.byters.engine.view.IScreen;
+import org.byters.game.agilityhealth.view.HelperResources;
 import org.byters.game.agilityhealth.view.InputHelper;
 import org.byters.game.agilityhealth.view.InputSettings;
-import org.byters.game.agilityhealth.view.TextureHelper;
 import org.byters.game.agilityhealth.view.presenter.PresenterScreenGame;
+import org.byters.game.agilityhealth.view.ui.util.HelperParticles;
 
 import java.lang.ref.WeakReference;
 
 public class ScreenGame implements IScreen {
 
     private WeakReference<InputSettings> refInputSettings;
-    private WeakReference<TextureHelper> refTextureHelper;
+    private WeakReference<HelperResources> refTextureHelper;
     private WeakReference<InputHelper> refInputHelper;
     private WeakReference<PresenterScreenGame> refPresenterScreenGame;
     private WeakReference<SpriteBatch> refSpriteBatch;
@@ -21,22 +22,34 @@ public class ScreenGame implements IScreen {
     private Texture tHero;
     private Texture tBg;
 
+    private HelperParticles bonefireParticles, dustParticles;
+
     public ScreenGame(PresenterScreenGame presenterScreenGame,
                       InputSettings inputSettings,
                       InputHelper inputHelper,
                       SpriteBatch spriteBatch,
-                      TextureHelper textureHelper) {
+                      HelperResources textureHelper) {
         this.refPresenterScreenGame = new WeakReference<>(presenterScreenGame);
         this.refSpriteBatch = new WeakReference<>(spriteBatch);
         this.refInputHelper = new WeakReference<>(inputHelper);
         this.refTextureHelper = new WeakReference<>(textureHelper);
         this.refInputSettings = new WeakReference<>(inputSettings);
+
+        bonefireParticles = new HelperParticles();
+        dustParticles = new HelperParticles();
     }
 
     @Override
     public void draw() {
         //todo draw enemies
         refSpriteBatch.get().draw(tBg, 0, 0);
+
+        dustParticles.draw(refSpriteBatch.get(), refPresenterScreenGame.get().getHeroPosX(), refPresenterScreenGame.get().getHeroPosY());
+
+        bonefireParticles.draw(refSpriteBatch.get(),
+                refPresenterScreenGame.get().getBonefirePosX(),
+                refPresenterScreenGame.get().getBonefirePosY());
+
         refSpriteBatch.get().draw(tHero, refPresenterScreenGame.get().getHeroPosX(), refPresenterScreenGame.get().getHeroPosY());
     }
 
@@ -44,11 +57,20 @@ public class ScreenGame implements IScreen {
     public void load() {
         tBg = new Texture(refTextureHelper.get().TEXTURE_GAME_BG);
         tHero = new Texture(refTextureHelper.get().TEXTURE_HERO);
+        bonefireParticles.load(refTextureHelper.get().PARTICLES_FILE_BONEFIRE,
+                refTextureHelper.get().FOLDER_PARTICLES_SPRITE);
+        dustParticles.load(refTextureHelper.get().PARTICLES_FILE_DUST,
+                refTextureHelper.get().FOLDER_PARTICLES_SPRITE);
     }
 
     @Override
     public void update(float delta) {
         refPresenterScreenGame.get().onUpdate(delta);
+
+        dustParticles.play(refPresenterScreenGame.get().isDrawDust());
+
+        dustParticles.update(delta);
+        bonefireParticles.update(delta);
     }
 
     @Override
@@ -84,5 +106,7 @@ public class ScreenGame implements IScreen {
     public void dispose() {
         tBg.dispose();
         tHero.dispose();
+        bonefireParticles.dispose();
+        dustParticles.dispose();
     }
 }
