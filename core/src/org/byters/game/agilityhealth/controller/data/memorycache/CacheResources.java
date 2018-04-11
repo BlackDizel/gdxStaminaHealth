@@ -1,6 +1,6 @@
-package org.byters.game.agilityhealth.view;
+package org.byters.game.agilityhealth.controller.data.memorycache;
 
-public class HelperResources {
+public class CacheResources {
     public String TEXTURE_HERO = "graphics/hero/warrior.png";
     public String TEXTURE_BG_MAINMENU = "graphics/screens/mainmenu/bg.jpg";
     public String TEXTURE_GAME_BG = "graphics/screens/game/bg.png";

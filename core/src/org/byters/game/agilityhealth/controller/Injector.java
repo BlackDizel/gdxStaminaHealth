@@ -2,17 +2,19 @@ package org.byters.game.agilityhealth.controller;
 
 import org.byters.engine.Engine;
 import org.byters.engine.view.IScreen;
+import org.byters.game.agilityhealth.controller.data.memorycache.CacheGUI;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheHero;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheMeta;
+import org.byters.game.agilityhealth.controller.data.memorycache.CacheResources;
 import org.byters.game.agilityhealth.view.InputHelper;
 import org.byters.game.agilityhealth.view.InputSettings;
 import org.byters.game.agilityhealth.view.Navigator;
-import org.byters.game.agilityhealth.view.HelperResources;
 import org.byters.game.agilityhealth.view.presenter.IPresenterScreenMenu;
 import org.byters.game.agilityhealth.view.presenter.PresenterScreenGame;
 import org.byters.game.agilityhealth.view.presenter.PresenterScreenMenu;
 import org.byters.game.agilityhealth.view.ui.ScreenGame;
 import org.byters.game.agilityhealth.view.ui.ScreenMenu;
+import org.byters.game.agilityhealth.view.ui.ViewGUI;
 
 public class Injector {
 
@@ -24,9 +26,11 @@ public class Injector {
     private Navigator navigator;
     private CacheHero cacheHero;
     private InputHelper inputHelper;
-    private HelperResources textureHelper;
+    private CacheResources textureHelper;
     private CacheMeta cacheMeta;
     private InputSettings inputSettings;
+    private ViewGUI viewGUI;
+    private CacheGUI cacheGUI;
 
     private IScreen getScreenMenu() {
         if (screenMenu == null)
@@ -49,8 +53,8 @@ public class Injector {
         return inputSettings;
     }
 
-    private HelperResources getHelperResources() {
-        if (textureHelper == null) textureHelper = new HelperResources();
+    private CacheResources getHelperResources() {
+        if (textureHelper == null) textureHelper = new CacheResources();
         return textureHelper;
     }
 
@@ -67,8 +71,14 @@ public class Injector {
     private PresenterScreenGame getPresenterScreenGame() {
         if (presenterScreenGame == null) presenterScreenGame = new PresenterScreenGame(getCacheMeta(),
                 getCacheHero(),
+                getCacheGUI(),
                 engine.getInjector().getControllerCamera());
         return presenterScreenGame;
+    }
+
+    private CacheGUI getCacheGUI() {
+        if (cacheGUI == null) cacheGUI = new CacheGUI(getCacheMeta());
+        return cacheGUI;
     }
 
     private IPresenterScreenMenu getPresenterScreenMenu() {
@@ -83,6 +93,7 @@ public class Injector {
 
     public void init() {
         getEngine().load();
+        getViewGUI().load();
         getNavigator().navigateScreen(getScreenMenu());
     }
 
@@ -94,5 +105,10 @@ public class Injector {
     public CacheMeta getCacheMeta() {
         if (cacheMeta == null) cacheMeta = new CacheMeta();
         return cacheMeta;
+    }
+
+    public ViewGUI getViewGUI() {
+        if (viewGUI == null) viewGUI = new ViewGUI(getCacheGUI(), getEngine().getInjector().getControllerCamera());
+        return viewGUI;
     }
 }

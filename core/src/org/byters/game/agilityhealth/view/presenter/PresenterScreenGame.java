@@ -1,6 +1,7 @@
 package org.byters.game.agilityhealth.view.presenter;
 
 import org.byters.engine.controller.ControllerCamera;
+import org.byters.game.agilityhealth.controller.data.memorycache.CacheGUI;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheHero;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheMeta;
 
@@ -8,16 +9,19 @@ import java.lang.ref.WeakReference;
 
 public class PresenterScreenGame {
 
+    private WeakReference<CacheGUI> refCacheGUI;
     private WeakReference<ControllerCamera> refControllerCamera;
     private WeakReference<CacheMeta> refCacheMeta;
     private WeakReference<CacheHero> refCacheHero;
 
     public PresenterScreenGame(CacheMeta cacheGame,
                                CacheHero cacheHero,
+                               CacheGUI cacheGUI,
                                ControllerCamera controllerCamera) {
         this.refCacheHero = new WeakReference<>(cacheHero);
         this.refCacheMeta = new WeakReference<>(cacheGame);
         this.refControllerCamera = new WeakReference<>(controllerCamera);
+        this.refCacheGUI = new WeakReference<>(cacheGUI);
     }
 
     public float getHeroPosX() {
@@ -44,9 +48,21 @@ public class PresenterScreenGame {
                 refCacheMeta.get().heroMaxX,
                 refCacheMeta.get().heroMaxY);
 
+        refControllerCamera.get().setPosition(refCacheHero.get().getHeroPosX(), refCacheHero.get().getHeroPosY(), 0);
 
-        refControllerCamera.get().setPosition(refCacheHero.get().getHeroPosX(),refCacheHero.get().getHeroPosY(),0);
+        updateGUI();
+    }
 
+    private void updateGUI() {
+        float staminaPercent = refCacheHero.get().getStaminaPercent();
+        refCacheGUI.get().setStamina(staminaPercent,
+                staminaPercent >= refCacheMeta.get().staminaBarHigh
+                        ? refCacheMeta.get().staminaBarColorMax
+                        : staminaPercent >= refCacheMeta.get().staminaBarMedium
+                        ? refCacheMeta.get().staminaBarColorHigh
+                        : refCacheMeta.get().staminaBarColorMedium,
+                refCacheHero.get().getHeroPosX() + refCacheMeta.get().staminaBarDeltaX,
+                refCacheHero.get().getHeroPosY() + refCacheMeta.get().staminaBarDeltaY);
     }
 
     public void onMoveMode(boolean isRun) {
@@ -63,5 +79,9 @@ public class PresenterScreenGame {
 
     public boolean isDrawDust() {
         return refCacheHero.get().isRun();
+    }
+
+    public void onLoad() {
+        refCacheGUI.get().resetData();
     }
 }

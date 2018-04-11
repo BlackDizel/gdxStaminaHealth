@@ -34,11 +34,13 @@ public class GameMain extends ApplicationAdapter {
     @Override
     public void render() {
         injector.getEngine().render();
+        injector.getViewGUI().draw();
     }
 
     @Override
     public void dispose() {
         injector.getEngine().dispose();
+        injector.getViewGUI().dispose();
     }
 
     public void resize(int width, int height) {

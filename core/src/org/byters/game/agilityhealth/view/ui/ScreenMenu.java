@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.byters.engine.view.IScreen;
-import org.byters.game.agilityhealth.view.HelperResources;
+import org.byters.game.agilityhealth.controller.data.memorycache.CacheResources;
 import org.byters.game.agilityhealth.view.presenter.IPresenterScreenMenu;
 
 import java.lang.ref.WeakReference;
@@ -13,14 +13,14 @@ import java.lang.ref.WeakReference;
 public class ScreenMenu implements IScreen {
 
     private WeakReference<SpriteBatch> refSpriteBatch;
-    private WeakReference<HelperResources> refTextureHelper;
+    private WeakReference<CacheResources> refTextureHelper;
     private WeakReference<IPresenterScreenMenu> refPresenterScreenMenu;
 
     private Texture tBg;
 
     public ScreenMenu(IPresenterScreenMenu presenterScreenMenu,
                       SpriteBatch spriteBatch,
-                      HelperResources textureHelper) {
+                      CacheResources textureHelper) {
         this.refPresenterScreenMenu = new WeakReference<>(presenterScreenMenu);
         this.refSpriteBatch = new WeakReference<>(spriteBatch);
         this.refTextureHelper = new WeakReference<>(textureHelper);

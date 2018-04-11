@@ -3,7 +3,7 @@ package org.byters.game.agilityhealth.view.ui;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.byters.engine.view.IScreen;
-import org.byters.game.agilityhealth.view.HelperResources;
+import org.byters.game.agilityhealth.controller.data.memorycache.CacheResources;
 import org.byters.game.agilityhealth.view.InputHelper;
 import org.byters.game.agilityhealth.view.InputSettings;
 import org.byters.game.agilityhealth.view.presenter.PresenterScreenGame;
@@ -14,7 +14,7 @@ import java.lang.ref.WeakReference;
 public class ScreenGame implements IScreen {
 
     private WeakReference<InputSettings> refInputSettings;
-    private WeakReference<HelperResources> refTextureHelper;
+    private WeakReference<CacheResources> refTextureHelper;
     private WeakReference<InputHelper> refInputHelper;
     private WeakReference<PresenterScreenGame> refPresenterScreenGame;
     private WeakReference<SpriteBatch> refSpriteBatch;
@@ -28,7 +28,7 @@ public class ScreenGame implements IScreen {
                       InputSettings inputSettings,
                       InputHelper inputHelper,
                       SpriteBatch spriteBatch,
-                      HelperResources textureHelper) {
+                      CacheResources textureHelper) {
         this.refPresenterScreenGame = new WeakReference<>(presenterScreenGame);
         this.refSpriteBatch = new WeakReference<>(spriteBatch);
         this.refInputHelper = new WeakReference<>(inputHelper);
@@ -61,6 +61,8 @@ public class ScreenGame implements IScreen {
                 refTextureHelper.get().FOLDER_PARTICLES_SPRITE);
         dustParticles.load(refTextureHelper.get().PARTICLES_FILE_DUST,
                 refTextureHelper.get().FOLDER_PARTICLES_SPRITE);
+
+        refPresenterScreenGame.get().onLoad();
     }
 
     @Override

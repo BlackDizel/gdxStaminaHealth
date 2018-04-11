@@ -9,7 +9,7 @@ public class CacheHero {
     private float deltaX, deltaY;
     private float posX, posY;
     private float speedPixelsPerSecond, speedRunPixelsPerSecond;
-    private float staminaMax, stamina, staminaRestoreDelta, staminaRunDecreaseDelta,staminaMinRunValue;
+    private float staminaMax, stamina, staminaRestoreDelta, staminaRunDecreaseDelta, staminaMinRunValue;
     private boolean isRunPressed;
 
     public CacheHero(CacheMeta cacheMeta) {
@@ -54,7 +54,7 @@ public class CacheHero {
         posX = Math.min(Math.max(minX, posX + deltaX * getSpeed() * deltaTimeSeconds), maxX);
         posY = Math.min(Math.max(minY, posY + deltaY * getSpeed() * deltaTimeSeconds), maxY);
 
-        if (isRunPressed)
+        if (isRun())
             stamina = Math.max(0, stamina - staminaRunDecreaseDelta * deltaTimeSeconds);
     }
 
@@ -82,5 +82,9 @@ public class CacheHero {
 
     private boolean isMove() {
         return !(deltaY == 0 && deltaX == 0);
+    }
+
+    public float getStaminaPercent() {
+        return stamina / staminaMax;
     }
 }
