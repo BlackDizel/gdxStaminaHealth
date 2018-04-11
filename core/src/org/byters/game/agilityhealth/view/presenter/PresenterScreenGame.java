@@ -50,7 +50,7 @@ public class PresenterScreenGame {
     }
 
     public void onMoveMode(boolean isRun) {
-        refCacheHero.get().setRun(isRun);
+        refCacheHero.get().setRunPressed(isRun);
     }
 
     public int getBonefirePosX() {

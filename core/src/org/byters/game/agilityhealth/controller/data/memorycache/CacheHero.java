@@ -9,7 +9,8 @@ public class CacheHero {
     private float deltaX, deltaY;
     private float posX, posY;
     private float speedPixelsPerSecond, speedRunPixelsPerSecond;
-    private boolean isRun;
+    private float staminaMax, stamina, staminaRestoreDelta, staminaRunDecreaseDelta,staminaMinRunValue;
+    private boolean isRunPressed;
 
     public CacheHero(CacheMeta cacheMeta) {
         this.refCacheMeta = new WeakReference<>(cacheMeta);
@@ -22,6 +23,12 @@ public class CacheHero {
         posY = refCacheMeta.get().initialHeroPosY;
         speedPixelsPerSecond = refCacheMeta.get().initialHeroSpeedPixelsPerSecond;
         speedRunPixelsPerSecond = refCacheMeta.get().initialHeroSpeedRunPixelsPerSecond;
+
+        stamina = refCacheMeta.get().initialHeroStamina;
+        staminaMax = refCacheMeta.get().initialHeroStamina;
+        staminaRestoreDelta = refCacheMeta.get().initialHeroStaminaRestoreDeltaPerSecond;
+        staminaRunDecreaseDelta = refCacheMeta.get().initialHeroStaminaDecreaseDeltaPerSecond;
+        staminaMinRunValue = refCacheMeta.get().initialHeroStaminaMinRunValue;
     }
 
     public float getHeroPosX() {
@@ -39,12 +46,25 @@ public class CacheHero {
     }
 
     public void update(float deltaTimeSeconds, int minX, int minY, int maxX, int maxY) {
-        posX = Math.min(Math.max(minX, posX + deltaX * getSpped() * deltaTimeSeconds), maxX);
-        posY = Math.min(Math.max(minY, posY + deltaY * getSpped() * deltaTimeSeconds), maxY);
+        checkPosition(deltaTimeSeconds, minX, minY, maxX, maxY);
+        restoreStamina(deltaTimeSeconds);
     }
 
-    private float getSpped() {
-        return isRun ? speedRunPixelsPerSecond : speedPixelsPerSecond;
+    private void checkPosition(float deltaTimeSeconds, int minX, int minY, int maxX, int maxY) {
+        posX = Math.min(Math.max(minX, posX + deltaX * getSpeed() * deltaTimeSeconds), maxX);
+        posY = Math.min(Math.max(minY, posY + deltaY * getSpeed() * deltaTimeSeconds), maxY);
+
+        if (isRunPressed)
+            stamina = Math.max(0, stamina - staminaRunDecreaseDelta * deltaTimeSeconds);
+    }
+
+    private void restoreStamina(float deltaTimeSeconds) {
+        if (isRunPressed) return;
+        stamina = Math.min(staminaMax, stamina + staminaRestoreDelta * deltaTimeSeconds);
+    }
+
+    private float getSpeed() {
+        return isRun() ? speedRunPixelsPerSecond : speedPixelsPerSecond;
     }
 
     public void resetMove() {
@@ -53,10 +73,14 @@ public class CacheHero {
     }
 
     public boolean isRun() {
-        return isRun && !(deltaY == 0 && deltaX == 0);
+        return isRunPressed && isMove() && stamina > staminaMinRunValue;
     }
 
-    public void setRun(boolean isRun) {
-        this.isRun = isRun;
+    public void setRunPressed(boolean isRun) {
+        this.isRunPressed = isRun;
+    }
+
+    private boolean isMove() {
+        return !(deltaY == 0 && deltaX == 0);
     }
 }
