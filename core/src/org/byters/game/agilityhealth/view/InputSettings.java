@@ -8,4 +8,5 @@ public class InputSettings {
     public int KEYS_MOVE_TOP = Input.Keys.W;
     public int KEYS_MOVE_BOTTOM = Input.Keys.S;
     public int KEYS_RUN = Input.Keys.SHIFT_LEFT;
+    public int KEYS_ATTACK = Input.Buttons.LEFT;
 }

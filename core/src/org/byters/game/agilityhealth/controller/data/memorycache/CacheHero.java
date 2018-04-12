@@ -11,6 +11,8 @@ public class CacheHero {
     private float speedPixelsPerSecond, speedRunPixelsPerSecond;
     private float staminaMax, stamina, staminaRestoreDelta, staminaRunDecreaseDelta, staminaMinRunValue;
     private boolean isRunPressed;
+    private long lastTimeAttack, timeAttackDelay;
+    private float staminaAttackDecreaseValue;
 
     public CacheHero(CacheMeta cacheMeta) {
         this.refCacheMeta = new WeakReference<>(cacheMeta);
@@ -29,6 +31,10 @@ public class CacheHero {
         staminaRestoreDelta = refCacheMeta.get().initialHeroStaminaRestoreDeltaPerSecond;
         staminaRunDecreaseDelta = refCacheMeta.get().initialHeroStaminaDecreaseDeltaPerSecond;
         staminaMinRunValue = refCacheMeta.get().initialHeroStaminaMinRunValue;
+
+        lastTimeAttack = 0;
+        timeAttackDelay = refCacheMeta.get().initialHeroTimeAttackDelay;
+        staminaAttackDecreaseValue = refCacheMeta.get().initialHeroStaminaAttackDecreaseValue;
     }
 
     public float getHeroPosX() {
@@ -59,7 +65,7 @@ public class CacheHero {
     }
 
     private void restoreStamina(float deltaTimeSeconds) {
-        if (isRunPressed) return;
+        if (isRunPressed || isAttacking()) return;
         stamina = Math.min(staminaMax, stamina + staminaRestoreDelta * deltaTimeSeconds);
     }
 
@@ -86,5 +92,20 @@ public class CacheHero {
 
     public float getStaminaPercent() {
         return stamina / staminaMax;
+    }
+
+    public boolean tryAttack() {
+        if (isAttacking()) return false;
+
+        if (stamina < staminaAttackDecreaseValue) return false;
+
+        stamina -= staminaAttackDecreaseValue;
+        lastTimeAttack = System.currentTimeMillis();
+
+        return true;
+    }
+
+    private boolean isAttacking() {
+        return System.currentTimeMillis() - lastTimeAttack < timeAttackDelay;
     }
 }

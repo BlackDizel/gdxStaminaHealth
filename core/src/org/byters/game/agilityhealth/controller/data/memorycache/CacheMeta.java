@@ -14,6 +14,7 @@ public class CacheMeta {
     public float initialHeroStaminaRestoreDeltaPerSecond = 40;
     public float initialHeroStaminaDecreaseDeltaPerSecond = 60;
     public float initialHeroStaminaMinRunValue = 10;
+    public long initialHeroTimeAttackDelay = 500;
 
     public int heroMaxX = 600;
     public int heroMaxY = 320;
@@ -36,4 +37,5 @@ public class CacheMeta {
 
     public float staminaBarDeltaX = -20;
     public float staminaBarDeltaY = -20;
+    public float initialHeroStaminaAttackDecreaseValue = 15;
 }

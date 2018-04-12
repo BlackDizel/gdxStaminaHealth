@@ -84,4 +84,8 @@ public class PresenterScreenGame {
     public void onLoad() {
         refCacheGUI.get().resetData();
     }
+
+    public void onPressedAttack() {
+        refCacheHero.get().tryAttack();
+    }
 }

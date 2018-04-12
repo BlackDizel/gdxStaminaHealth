@@ -79,7 +79,13 @@ public class ScreenGame implements IScreen {
     public void input() {
         checkMove();
         checkRun();
+        checkAttack();
         //todo input hero
+    }
+
+    private void checkAttack() {
+        if (refInputHelper.get().isButtonPressed(refInputSettings.get().KEYS_ATTACK))
+            refPresenterScreenGame.get().onPressedAttack();
     }
 
     private void checkRun() {
