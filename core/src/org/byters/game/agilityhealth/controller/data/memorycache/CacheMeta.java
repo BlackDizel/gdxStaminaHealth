@@ -17,6 +17,7 @@ public class CacheMeta {
     public long initialHeroTimeAttackDelay = 500;
     public float initialHeroDamageValue = 60;
     public float initialHeroAttackDistanceSquared = 2500;
+    public long initialHeroTimeDamagedStaminaRestoreDelayMillis = 1200;
 
     public int heroMaxX = 600;
     public int heroMaxY = 320;
@@ -49,4 +50,7 @@ public class CacheMeta {
     public int initialMonsterBoundX = 600;
     public int initialMonsterBoundY = 320;
     public long initialMonsterTimeStunMillis = 800;
+    public long initialMonsterTimeAttackDelayMillis = 1000;
+    public float initialMonsterAttackDistanceSquared = 400;
+    public float initialMonsterDamageValue = 25;
 }

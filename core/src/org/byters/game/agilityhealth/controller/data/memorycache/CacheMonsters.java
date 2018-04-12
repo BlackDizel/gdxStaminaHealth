@@ -20,6 +20,7 @@ public class CacheMonsters {
     private float damageValue;
     private float attackDistanceSquared;
     private int maxMonstersNum;
+    private float damage;
 
     public CacheMonsters(CacheMeta cacheMeta, Random random) {
         refCacheMeta = new WeakReference<>(cacheMeta);
@@ -29,6 +30,7 @@ public class CacheMonsters {
 
     public void resetData() {
         data = null;
+        damage = 0;
 
         lastTimeSpawn = 0;
         timeSpawnDelay = refCacheMeta.get().timeMonsterSpawnDelay;
@@ -43,6 +45,8 @@ public class CacheMonsters {
     }
 
     private void updateMonsters(float delta, float heroPosX, float heroPosY) {
+        damage = 0;
+
         if (data == null || data.size() == 0) return;
         Iterator<MonsterData> itr = data.iterator();
 
@@ -58,7 +62,7 @@ public class CacheMonsters {
             }
 
             item.update(delta, heroPosX, heroPosY);
-
+            damage += item.getAttack(heroPosX, heroPosY);
         }
 
         resetUnderAttackState();
@@ -114,5 +118,9 @@ public class CacheMonsters {
 
     public float getMonsterPosY(int i) {
         return data == null || data.size() <= i ? 0 : data.get(i).getPosY();
+    }
+
+    public float getDamage() {
+        return damage;
     }
 }

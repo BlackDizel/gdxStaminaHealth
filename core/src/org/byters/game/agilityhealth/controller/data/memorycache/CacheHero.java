@@ -15,6 +15,9 @@ public class CacheHero {
     private float staminaAttackDecreaseValue;
     private float attackDistanceSquared;
     private float damageValue;
+    private boolean isDie;
+    private long lastTimeDamaged;
+    private long timeDamagedStaminaRestoreDelayMillis;
 
     public CacheHero(CacheMeta cacheMeta) {
         this.refCacheMeta = new WeakReference<>(cacheMeta);
@@ -39,6 +42,10 @@ public class CacheHero {
         staminaAttackDecreaseValue = refCacheMeta.get().initialHeroStaminaAttackDecreaseValue;
         damageValue = refCacheMeta.get().initialHeroDamageValue;
         attackDistanceSquared = refCacheMeta.get().initialHeroAttackDistanceSquared;
+        isDie = false;
+        lastTimeDamaged = 0;
+
+        timeDamagedStaminaRestoreDelayMillis = refCacheMeta.get().initialHeroTimeDamagedStaminaRestoreDelayMillis;
     }
 
     public float getHeroPosX() {
@@ -55,22 +62,32 @@ public class CacheHero {
         deltaY += Math.sin(angle);
     }
 
-    public void update(float deltaTimeSeconds, int minX, int minY, int maxX, int maxY) {
+    public void update(float damageRecieved, float deltaTimeSeconds, int minX, int minY, int maxX, int maxY) {
         checkPosition(deltaTimeSeconds, minX, minY, maxX, maxY);
-        restoreStamina(deltaTimeSeconds);
+        updateStamina(deltaTimeSeconds, damageRecieved);
     }
 
     private void checkPosition(float deltaTimeSeconds, int minX, int minY, int maxX, int maxY) {
         posX = Math.min(Math.max(minX, posX + deltaX * getSpeed() * deltaTimeSeconds), maxX);
         posY = Math.min(Math.max(minY, posY + deltaY * getSpeed() * deltaTimeSeconds), maxY);
+    }
+
+    private void updateStamina(float deltaTimeSeconds, float damageValue) {
+        if (damageValue > 0) {
+            stamina -= damageValue;
+            lastTimeDamaged = System.currentTimeMillis();
+            isDie = stamina <= 0;
+        }
 
         if (isRun())
             stamina = Math.max(0, stamina - staminaRunDecreaseDelta * deltaTimeSeconds);
+
+        if (isRunPressed || isAttacking() || isAttackedEarly()) return;
+        stamina = Math.min(staminaMax, stamina + staminaRestoreDelta * deltaTimeSeconds);
     }
 
-    private void restoreStamina(float deltaTimeSeconds) {
-        if (isRunPressed || isAttacking()) return;
-        stamina = Math.min(staminaMax, stamina + staminaRestoreDelta * deltaTimeSeconds);
+    private boolean isAttackedEarly() {
+        return System.currentTimeMillis() - lastTimeDamaged < timeDamagedStaminaRestoreDelayMillis;
     }
 
     private float getSpeed() {
@@ -119,5 +136,9 @@ public class CacheHero {
 
     public float getDamageValue() {
         return damageValue;
+    }
+
+    public boolean isDie() {
+        return isDie;
     }
 }

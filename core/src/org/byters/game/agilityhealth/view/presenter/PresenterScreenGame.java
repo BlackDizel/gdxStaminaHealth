@@ -1,15 +1,19 @@
 package org.byters.game.agilityhealth.view.presenter;
 
 import org.byters.engine.controller.ControllerCamera;
+import org.byters.engine.view.IScreen;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheGUI;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheHero;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheMeta;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheMonsters;
+import org.byters.game.agilityhealth.view.Navigator;
 
 import java.lang.ref.WeakReference;
 
 public class PresenterScreenGame {
 
+    private WeakReference<IScreen> refScreenDeath;
+    private WeakReference<Navigator> refNavigator;
     private WeakReference<CacheMonsters> refCacheMonsters;
     private WeakReference<CacheGUI> refCacheGUI;
     private WeakReference<ControllerCamera> refControllerCamera;
@@ -20,12 +24,16 @@ public class PresenterScreenGame {
                                CacheMeta cacheGame,
                                CacheHero cacheHero,
                                CacheGUI cacheGUI,
-                               ControllerCamera controllerCamera) {
+                               ControllerCamera controllerCamera,
+                               Navigator navigator,
+                               IScreen screerDeath) {
         this.refCacheHero = new WeakReference<>(cacheHero);
         this.refCacheMeta = new WeakReference<>(cacheGame);
         this.refControllerCamera = new WeakReference<>(controllerCamera);
         this.refCacheGUI = new WeakReference<>(cacheGUI);
         this.refCacheMonsters = new WeakReference<>(cacheMonsters);
+        this.refNavigator = new WeakReference<>(navigator);
+        this.refScreenDeath = new WeakReference<>(screerDeath);
     }
 
     public float getHeroPosX() {
@@ -45,7 +53,10 @@ public class PresenterScreenGame {
     }
 
     public void onUpdate(float delta) {
+        if (checkDeath()) return;
+
         refCacheHero.get().update(
+                refCacheMonsters.get().getDamage(),
                 delta,
                 refCacheMeta.get().heroMinX,
                 refCacheMeta.get().heroMinY,
@@ -57,6 +68,12 @@ public class PresenterScreenGame {
         refCacheMonsters.get().onUpdate(delta, refCacheHero.get().getHeroPosX(), refCacheHero.get().getHeroPosY());
 
         updateGUI();
+    }
+
+    private boolean checkDeath() {
+        if (!refCacheHero.get().isDie()) return false;
+        refNavigator.get().navigateScreen(refScreenDeath.get());
+        return true;
     }
 
     private void updateGUI() {

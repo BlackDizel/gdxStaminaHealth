@@ -6,9 +6,11 @@ import org.byters.game.agilityhealth.controller.data.memorycache.*;
 import org.byters.game.agilityhealth.view.InputHelper;
 import org.byters.game.agilityhealth.view.InputSettings;
 import org.byters.game.agilityhealth.view.Navigator;
+import org.byters.game.agilityhealth.view.PresenterScreenDeath;
 import org.byters.game.agilityhealth.view.presenter.IPresenterScreenMenu;
 import org.byters.game.agilityhealth.view.presenter.PresenterScreenGame;
 import org.byters.game.agilityhealth.view.presenter.PresenterScreenMenu;
+import org.byters.game.agilityhealth.view.ui.ScreenDeath;
 import org.byters.game.agilityhealth.view.ui.ScreenGame;
 import org.byters.game.agilityhealth.view.ui.ScreenMenu;
 import org.byters.game.agilityhealth.view.ui.ViewGUI;
@@ -18,6 +20,7 @@ public class Injector {
     private Engine engine;
     private IScreen screenMenu;
     private IScreen screenGame;
+    private IScreen screenDeath;
     private IPresenterScreenMenu presenterScreenMenu;
     private PresenterScreenGame presenterScreenGame;
     private Navigator navigator;
@@ -29,6 +32,7 @@ public class Injector {
     private ViewGUI viewGUI;
     private CacheGUI cacheGUI;
     private CacheMonsters cacheMonsters;
+    private PresenterScreenDeath presenterScreenDeath;
 
     private IScreen getScreenMenu() {
         if (screenMenu == null)
@@ -44,6 +48,14 @@ public class Injector {
                     engine.getInjector().getControllerResources().getSpriteBatch(),
                     getHelperResources());
         return screenGame;
+    }
+
+    private IScreen getScreenDeath() {
+        if (screenDeath == null)
+            screenDeath = new ScreenDeath(getPresenterScreenDeath(),
+                    engine.getInjector().getControllerResources().getSpriteBatch(),
+                    getHelperResources());
+        return screenDeath;
     }
 
     private InputSettings getInputSetting() {
@@ -72,8 +84,15 @@ public class Injector {
                 getCacheMeta(),
                 getCacheHero(),
                 getCacheGUI(),
-                engine.getInjector().getControllerCamera());
+                engine.getInjector().getControllerCamera(),
+                getNavigator(),
+                getScreenDeath());
         return presenterScreenGame;
+    }
+
+    private PresenterScreenDeath getPresenterScreenDeath() {
+        if (presenterScreenDeath == null) presenterScreenDeath = new PresenterScreenDeath(getCacheGUI());
+        return presenterScreenDeath;
     }
 
     private CacheMonsters getCacheMonsters() {
