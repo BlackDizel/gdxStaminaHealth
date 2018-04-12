@@ -4,17 +4,20 @@ import org.byters.engine.controller.ControllerCamera;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheGUI;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheHero;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheMeta;
+import org.byters.game.agilityhealth.controller.data.memorycache.CacheMonsters;
 
 import java.lang.ref.WeakReference;
 
 public class PresenterScreenGame {
 
+    private WeakReference<CacheMonsters> refCacheMonsters;
     private WeakReference<CacheGUI> refCacheGUI;
     private WeakReference<ControllerCamera> refControllerCamera;
     private WeakReference<CacheMeta> refCacheMeta;
     private WeakReference<CacheHero> refCacheHero;
 
-    public PresenterScreenGame(CacheMeta cacheGame,
+    public PresenterScreenGame(CacheMonsters cacheMonsters,
+                               CacheMeta cacheGame,
                                CacheHero cacheHero,
                                CacheGUI cacheGUI,
                                ControllerCamera controllerCamera) {
@@ -22,6 +25,7 @@ public class PresenterScreenGame {
         this.refCacheMeta = new WeakReference<>(cacheGame);
         this.refControllerCamera = new WeakReference<>(controllerCamera);
         this.refCacheGUI = new WeakReference<>(cacheGUI);
+        this.refCacheMonsters = new WeakReference<>(cacheMonsters);
     }
 
     public float getHeroPosX() {
@@ -49,6 +53,8 @@ public class PresenterScreenGame {
                 refCacheMeta.get().heroMaxY);
 
         refControllerCamera.get().setPosition(refCacheHero.get().getHeroPosX(), refCacheHero.get().getHeroPosY(), 0);
+
+        refCacheMonsters.get().onUpdate(delta, refCacheHero.get().getHeroPosX(), refCacheHero.get().getHeroPosY());
 
         updateGUI();
     }
@@ -82,10 +88,32 @@ public class PresenterScreenGame {
     }
 
     public void onLoad() {
+        refCacheMonsters.get().resetData();
         refCacheGUI.get().resetData();
     }
 
     public void onPressedAttack() {
-        refCacheHero.get().tryAttack();
+        if (refCacheHero.get().tryAttack())
+            refCacheMonsters.get().onAttack(
+                    refCacheHero.get().getHeroPosX(),
+                    refCacheHero.get().getHeroPosY(),
+                    refCacheHero.get().getAttackDistanceSquared(),
+                    refCacheHero.get().getDamageValue());
+    }
+
+    public boolean isMonstersExist() {
+        return refCacheMonsters.get().isMonstersExist();
+    }
+
+    public int getMonstersNum() {
+        return refCacheMonsters.get().getMonstersNum();
+    }
+
+    public float getMonsterPosX(int i) {
+        return refCacheMonsters.get().getMonsterPosX(i);
+    }
+
+    public float getMonsterPosY(int i) {
+        return refCacheMonsters.get().getMonsterPosY(i);
     }
 }

@@ -2,10 +2,7 @@ package org.byters.game.agilityhealth.controller;
 
 import org.byters.engine.Engine;
 import org.byters.engine.view.IScreen;
-import org.byters.game.agilityhealth.controller.data.memorycache.CacheGUI;
-import org.byters.game.agilityhealth.controller.data.memorycache.CacheHero;
-import org.byters.game.agilityhealth.controller.data.memorycache.CacheMeta;
-import org.byters.game.agilityhealth.controller.data.memorycache.CacheResources;
+import org.byters.game.agilityhealth.controller.data.memorycache.*;
 import org.byters.game.agilityhealth.view.InputHelper;
 import org.byters.game.agilityhealth.view.InputSettings;
 import org.byters.game.agilityhealth.view.Navigator;
@@ -31,6 +28,7 @@ public class Injector {
     private InputSettings inputSettings;
     private ViewGUI viewGUI;
     private CacheGUI cacheGUI;
+    private CacheMonsters cacheMonsters;
 
     private IScreen getScreenMenu() {
         if (screenMenu == null)
@@ -69,11 +67,18 @@ public class Injector {
     }
 
     private PresenterScreenGame getPresenterScreenGame() {
-        if (presenterScreenGame == null) presenterScreenGame = new PresenterScreenGame(getCacheMeta(),
+        if (presenterScreenGame == null) presenterScreenGame = new PresenterScreenGame(
+                getCacheMonsters(),
+                getCacheMeta(),
                 getCacheHero(),
                 getCacheGUI(),
                 engine.getInjector().getControllerCamera());
         return presenterScreenGame;
+    }
+
+    private CacheMonsters getCacheMonsters() {
+        if (cacheMonsters == null) cacheMonsters = new CacheMonsters(getCacheMeta(), engine.getInjector().getRandom());
+        return cacheMonsters;
     }
 
     private CacheGUI getCacheGUI() {

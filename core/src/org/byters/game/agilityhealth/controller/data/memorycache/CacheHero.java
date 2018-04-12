@@ -13,6 +13,8 @@ public class CacheHero {
     private boolean isRunPressed;
     private long lastTimeAttack, timeAttackDelay;
     private float staminaAttackDecreaseValue;
+    private float attackDistanceSquared;
+    private float damageValue;
 
     public CacheHero(CacheMeta cacheMeta) {
         this.refCacheMeta = new WeakReference<>(cacheMeta);
@@ -35,6 +37,8 @@ public class CacheHero {
         lastTimeAttack = 0;
         timeAttackDelay = refCacheMeta.get().initialHeroTimeAttackDelay;
         staminaAttackDecreaseValue = refCacheMeta.get().initialHeroStaminaAttackDecreaseValue;
+        damageValue = refCacheMeta.get().initialHeroDamageValue;
+        attackDistanceSquared = refCacheMeta.get().initialHeroAttackDistanceSquared;
     }
 
     public float getHeroPosX() {
@@ -107,5 +111,13 @@ public class CacheHero {
 
     private boolean isAttacking() {
         return System.currentTimeMillis() - lastTimeAttack < timeAttackDelay;
+    }
+
+    public float getAttackDistanceSquared() {
+        return attackDistanceSquared;
+    }
+
+    public float getDamageValue() {
+        return damageValue;
     }
 }

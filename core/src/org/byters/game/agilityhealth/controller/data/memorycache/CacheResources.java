@@ -2,6 +2,7 @@ package org.byters.game.agilityhealth.controller.data.memorycache;
 
 public class CacheResources {
     public String TEXTURE_HERO = "graphics/hero/warrior.png";
+    public String TEXTURE_MONSTER = "graphics/monster/monster.png";
     public String TEXTURE_BG_MAINMENU = "graphics/screens/mainmenu/bg.jpg";
     public String TEXTURE_GAME_BG = "graphics/screens/game/bg.png";
     public String PARTICLES_FILE_BONEFIRE = "particles/fire.p";

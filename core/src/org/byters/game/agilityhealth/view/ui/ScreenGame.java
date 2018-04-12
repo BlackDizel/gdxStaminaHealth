@@ -7,6 +7,7 @@ import org.byters.game.agilityhealth.controller.data.memorycache.CacheResources;
 import org.byters.game.agilityhealth.view.InputHelper;
 import org.byters.game.agilityhealth.view.InputSettings;
 import org.byters.game.agilityhealth.view.presenter.PresenterScreenGame;
+import org.byters.game.agilityhealth.view.ui.util.DrawHelper;
 import org.byters.game.agilityhealth.view.ui.util.HelperParticles;
 
 import java.lang.ref.WeakReference;
@@ -19,7 +20,7 @@ public class ScreenGame implements IScreen {
     private WeakReference<PresenterScreenGame> refPresenterScreenGame;
     private WeakReference<SpriteBatch> refSpriteBatch;
 
-    private Texture tHero;
+    private Texture tHero, tMonster;
     private Texture tBg;
 
     private HelperParticles bonefireParticles, dustParticles;
@@ -50,13 +51,22 @@ public class ScreenGame implements IScreen {
                 refPresenterScreenGame.get().getBonefirePosX(),
                 refPresenterScreenGame.get().getBonefirePosY());
 
-        refSpriteBatch.get().draw(tHero, refPresenterScreenGame.get().getHeroPosX(), refPresenterScreenGame.get().getHeroPosY());
+        drawMonsters();
+        DrawHelper.drawCentered(refSpriteBatch.get(), tHero, refPresenterScreenGame.get().getHeroPosX(), refPresenterScreenGame.get().getHeroPosY());
+    }
+
+    private void drawMonsters() {
+        if (!refPresenterScreenGame.get().isMonstersExist()) return;
+        for (int i = 0; i < refPresenterScreenGame.get().getMonstersNum(); ++i) {
+            DrawHelper.drawCentered(refSpriteBatch.get(), tMonster, refPresenterScreenGame.get().getMonsterPosX(i), refPresenterScreenGame.get().getMonsterPosY(i));
+        }
     }
 
     @Override
     public void load() {
         tBg = new Texture(refTextureHelper.get().TEXTURE_GAME_BG);
         tHero = new Texture(refTextureHelper.get().TEXTURE_HERO);
+        tMonster = new Texture(refTextureHelper.get().TEXTURE_MONSTER);
         bonefireParticles.load(refTextureHelper.get().PARTICLES_FILE_BONEFIRE,
                 refTextureHelper.get().FOLDER_PARTICLES_SPRITE);
         dustParticles.load(refTextureHelper.get().PARTICLES_FILE_DUST,
@@ -114,6 +124,7 @@ public class ScreenGame implements IScreen {
     public void dispose() {
         tBg.dispose();
         tHero.dispose();
+        tMonster.dispose();
         bonefireParticles.dispose();
         dustParticles.dispose();
     }

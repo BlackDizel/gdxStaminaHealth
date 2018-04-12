@@ -15,6 +15,8 @@ public class CacheMeta {
     public float initialHeroStaminaDecreaseDeltaPerSecond = 60;
     public float initialHeroStaminaMinRunValue = 10;
     public long initialHeroTimeAttackDelay = 500;
+    public float initialHeroDamageValue = 60;
+    public float initialHeroAttackDistanceSquared = 2500;
 
     public int heroMaxX = 600;
     public int heroMaxY = 320;
@@ -35,7 +37,16 @@ public class CacheMeta {
     public Color staminaBarColorHigh = Color.YELLOW;
     public Color staminaBarColorMedium = Color.RED;
 
-    public float staminaBarDeltaX = -20;
-    public float staminaBarDeltaY = -20;
+    public float staminaBarDeltaX = -36;
+    public float staminaBarDeltaY = -36;
     public float initialHeroStaminaAttackDecreaseValue = 15;
+
+    public long timeMonsterSpawnDelay = 2000;
+    public float initialMonsterStamina = 100;
+    public float initialMonsterSpeedPixelsPerSecond = 120;
+    public long initialMonsterTimeCalcDirectionDelayMillis = 750;
+    public int initialMonstersmaxNum = 8;
+    public int initialMonsterBoundX = 600;
+    public int initialMonsterBoundY = 320;
+    public long initialMonsterTimeStunMillis = 800;
 }
