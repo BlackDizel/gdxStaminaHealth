@@ -34,7 +34,7 @@ public class CacheGUI implements ICacheGUI {
         if (data == null || data.size() == 0)
             initData();
 
-        data.get(0).setWidth(staminaPercent * refCacheMeta.get().uiStaminaBarWidth);
+        data.get(0).setWidth(Math.max(0, staminaPercent) * refCacheMeta.get().uiStaminaBarWidth);
 
         if (!data.get(0).getColor().equals(color))
             updateColor(color);

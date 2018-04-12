@@ -32,7 +32,7 @@ public class CacheMeta {
     public int uiStaminaBarBorderWidth = 2;
     public int uiStaminaBarBorderDistance = 1;
 
-    public float staminaBarHigh = 0.8f;
+    public float staminaBarHigh = 0.9f;
     public float staminaBarMedium = 0.3f;
     public Color staminaBarColorMax = Color.CLEAR;
     public Color staminaBarColorHigh = Color.YELLOW;
