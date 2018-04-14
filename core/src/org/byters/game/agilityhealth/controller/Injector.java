@@ -1,8 +1,10 @@
 package org.byters.game.agilityhealth.controller;
 
 import org.byters.engine.Engine;
+import org.byters.engine.controller.ControllerJsonBase;
 import org.byters.engine.view.IScreen;
 import org.byters.game.agilityhealth.controller.data.memorycache.*;
+import org.byters.game.agilityhealth.controller.data.memorycache.util.MonsterSpawnHelper;
 import org.byters.game.agilityhealth.view.InputHelper;
 import org.byters.game.agilityhealth.view.InputSettings;
 import org.byters.game.agilityhealth.view.Navigator;
@@ -33,6 +35,8 @@ public class Injector {
     private CacheGUI cacheGUI;
     private CacheMonsters cacheMonsters;
     private PresenterScreenDeath presenterScreenDeath;
+    private MonsterSpawnHelper monsterSpawnHelper;
+    private ControllerJsonBase controllerJsonBase;
 
     private IScreen getScreenMenu() {
         if (screenMenu == null)
@@ -96,7 +100,7 @@ public class Injector {
     }
 
     private CacheMonsters getCacheMonsters() {
-        if (cacheMonsters == null) cacheMonsters = new CacheMonsters(getCacheMeta(), engine.getInjector().getRandom());
+        if (cacheMonsters == null) cacheMonsters = new CacheMonsters(getMonstersSpawnHelper());
         return cacheMonsters;
     }
 
@@ -119,6 +123,19 @@ public class Injector {
         getEngine().load();
         getViewGUI().load();
         getNavigator().navigateScreen(getScreenMenu());
+        getMonstersSpawnHelper().load();
+    }
+
+    private MonsterSpawnHelper getMonstersSpawnHelper() {
+        if (monsterSpawnHelper == null)
+            monsterSpawnHelper = new MonsterSpawnHelper(getHelperResources(), getCacheMeta(), getControllerJsonBase());
+        return monsterSpawnHelper;
+    }
+
+    private ControllerJsonBase getControllerJsonBase() {
+        if (controllerJsonBase == null)
+            controllerJsonBase = new ControllerJsonBase(); //todo: move this to Engine Injector
+        return controllerJsonBase;
     }
 
     public Engine getEngine() {

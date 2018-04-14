@@ -2,13 +2,14 @@ package org.byters.game.agilityhealth.model;
 
 import com.badlogic.gdx.math.Vector2;
 import org.byters.game.agilityhealth.MathHelper;
-import org.byters.game.agilityhealth.controller.data.memorycache.CacheMeta;
 
 public class MonsterData {
 
     private final float speed;
+    private final long timeAttackPrepareMillis;
     private float x, y;
     private float stamina;
+
     private Vector2 direction;
     private long lastTimeCalcDirectionMillis, timeCalcDirectionDelay;
     private long lastTimeStunMillis, timeStunMillis;
@@ -16,18 +17,28 @@ public class MonsterData {
     private float monsterAttackDistanceSquared;
     private float damageValue;
 
-    public MonsterData(CacheMeta cacheMeta, float x, float y) {
-        stamina = cacheMeta.initialMonsterStamina;
-        speed = cacheMeta.initialMonsterSpeedPixelsPerSecond;
-        monsterAttackDistanceSquared = cacheMeta.initialMonsterAttackDistanceSquared;
-        damageValue = cacheMeta.initialMonsterDamageValue;
+    public MonsterData(float x,
+                       float y,
+                       float stamina,
+                       float speed,
+                       float attackDistanceSquared,
+                       float damageValue,
+                       long stunMillis,
+                       long directionCalc,
+                       long attackDelayMillis,
+                       long attackPrepareMillis) {
+        this.stamina = stamina;
+        this.speed = speed;
+        monsterAttackDistanceSquared = attackDistanceSquared;
+        this.damageValue = damageValue;
         this.x = x;
         this.y = y;
         direction = new Vector2();
 
-        timeStunMillis = cacheMeta.initialMonsterTimeStunMillis;
-        timeCalcDirectionDelay = cacheMeta.initialMonsterTimeCalcDirectionDelayMillis;
-        timeAttackDelayMillis = cacheMeta.initialMonsterTimeAttackDelayMillis;
+        timeStunMillis = stunMillis;
+        timeCalcDirectionDelay = directionCalc;
+        timeAttackDelayMillis = attackDelayMillis;
+        this.timeAttackPrepareMillis = attackPrepareMillis;//todo implement
 
         lastTimeAttackMillis = 0;
         lastTimeStunMillis = 0;
@@ -85,9 +96,6 @@ public class MonsterData {
         if (System.currentTimeMillis() - lastTimeAttackMillis < timeAttackDelayMillis) return 0;
 
         if (MathHelper.distanceSquared(x, y, heroPosX, heroPosY) > monsterAttackDistanceSquared) return 0;
-
-
-        System.out.println("kick");
 
         lastTimeAttackMillis = System.currentTimeMillis();
 

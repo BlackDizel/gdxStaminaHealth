@@ -42,15 +42,5 @@ public class CacheMeta {
     public float staminaBarDeltaY = -36;
     public float initialHeroStaminaAttackDecreaseValue = 15;
 
-    public long timeMonsterSpawnDelay = 2000;
-    public float initialMonsterStamina = 100;
-    public float initialMonsterSpeedPixelsPerSecond = 120;
-    public long initialMonsterTimeCalcDirectionDelayMillis = 750;
-    public int initialMonstersmaxNum = 8;
-    public int initialMonsterBoundX = 600;
-    public int initialMonsterBoundY = 320;
     public long initialMonsterTimeStunMillis = 800;
-    public long initialMonsterTimeAttackDelayMillis = 1000;
-    public float initialMonsterAttackDistanceSquared = 400;
-    public float initialMonsterDamageValue = 25;
 }

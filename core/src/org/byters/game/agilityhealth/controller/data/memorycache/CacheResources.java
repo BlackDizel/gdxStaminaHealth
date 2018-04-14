@@ -9,4 +9,5 @@ public class CacheResources {
     public String PARTICLES_FILE_BONEFIRE = "particles/fire.p";
     public String FOLDER_PARTICLES_SPRITE = "graphics";
     public String PARTICLES_FILE_DUST = "particles/dust.p";
+    public String JSON_MONSTERS_WAVES = "json/monsters.json";
 }

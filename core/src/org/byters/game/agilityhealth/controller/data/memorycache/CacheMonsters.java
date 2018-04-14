@@ -6,25 +6,21 @@ import org.byters.game.agilityhealth.model.MonsterData;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Random;
 
 public class CacheMonsters {
 
-    private WeakReference<Random> refRandom;
-    private WeakReference<CacheMeta> refCacheMeta;
     private ArrayList<MonsterData> data;
 
-    private long lastTimeSpawn, timeSpawnDelay;
     private boolean underAttack;
     private float attackPosX, attackPosY;
     private float damageValue;
     private float attackDistanceSquared;
-    private int maxMonstersNum;
     private float damage;
 
-    public CacheMonsters(CacheMeta cacheMeta, Random random) {
-        refCacheMeta = new WeakReference<>(cacheMeta);
-        refRandom = new WeakReference<>(random);
+    private WeakReference<MonsterSpawnHelper> refMonsterSpawnHelper;
+
+    public CacheMonsters(MonsterSpawnHelper monsterSpawnHelper) {
+        refMonsterSpawnHelper = new WeakReference<>(monsterSpawnHelper);
         resetData();
     }
 
@@ -32,9 +28,7 @@ public class CacheMonsters {
         data = null;
         damage = 0;
 
-        lastTimeSpawn = 0;
-        timeSpawnDelay = refCacheMeta.get().timeMonsterSpawnDelay;
-        maxMonstersNum = refCacheMeta.get().initialMonstersmaxNum;
+        refMonsterSpawnHelper.get().resetData();
 
         resetUnderAttackState();
     }
@@ -77,20 +71,9 @@ public class CacheMonsters {
     }
 
     private void checkSpawn() {
-        //todo some very complex logic here to calc monsters spawn.
-
-
-        //todo this stupid logic just temp :D
-        if (System.currentTimeMillis() - lastTimeSpawn < timeSpawnDelay) return;
-        lastTimeSpawn = System.currentTimeMillis();
-        addMonster();
-    }
-
-    private void addMonster() {
         if (data == null) data = new ArrayList<>();
 
-        if (data.size() >= maxMonstersNum) return;
-        data.add(MonsterSpawnHelper.getMonster(refCacheMeta.get(), refRandom.get()));
+        refMonsterSpawnHelper.get().update(data);
     }
 
     public void onAttack(float heroPosX,
