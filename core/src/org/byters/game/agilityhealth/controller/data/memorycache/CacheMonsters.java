@@ -106,4 +106,8 @@ public class CacheMonsters {
     public float getDamage() {
         return damage;
     }
+
+    public boolean isAllMonstersDefeated() {
+        return refMonsterSpawnHelper.get().isAllWavesDefeated(data);
+    }
 }

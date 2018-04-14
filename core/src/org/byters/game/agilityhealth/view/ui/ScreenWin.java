@@ -9,13 +9,13 @@ import org.byters.game.agilityhealth.view.PresenterScreenGameOver;
 
 import java.lang.ref.WeakReference;
 
-public class ScreenDeath implements IScreen {
+public class ScreenWin implements IScreen {
+    private WeakReference<PresenterScreenGameOver> refPresenterScreenDeath;
     private WeakReference<CacheResources> refCacheResources;
     private WeakReference<SpriteBatch> refSpriteBatch;
-    private WeakReference<PresenterScreenGameOver> refPresenterScreenDeath;
     private Texture tBg;
 
-    public ScreenDeath(
+    public ScreenWin(
             PresenterScreenGameOver presenterScreenDeath,
             SpriteBatch spriteBatch,
             CacheResources cacheResources) {
@@ -33,7 +33,7 @@ public class ScreenDeath implements IScreen {
     @Override
     public void load() {
         refPresenterScreenDeath.get().onLoad();
-        tBg = new Texture(Gdx.files.internal(refCacheResources.get().TEXTURE_BG_DEATHSCREEN));
+        tBg = new Texture(Gdx.files.internal(refCacheResources.get().TEXTURE_BG_WINSCREEN));
     }
 
     @Override

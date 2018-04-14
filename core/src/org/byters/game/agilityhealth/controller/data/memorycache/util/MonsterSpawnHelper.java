@@ -38,6 +38,13 @@ public class MonsterSpawnHelper {
         resetWaveData();
     }
 
+    public boolean isAllWavesDefeated(ArrayList<MonsterData> monsters) {
+        if (monsters != null && monsters.size() > 0) return false;
+        if (data == null) return true;
+
+        return currentWaveIndex >= data.getWavesNum();
+    }
+
     public void update(ArrayList<MonsterData> monsters) {
         if (monsters == null) return;
 

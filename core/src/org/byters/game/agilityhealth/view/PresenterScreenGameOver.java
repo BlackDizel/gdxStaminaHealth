@@ -4,10 +4,10 @@ import org.byters.game.agilityhealth.controller.data.memorycache.CacheGUI;
 
 import java.lang.ref.WeakReference;
 
-public class PresenterScreenDeath {
+public class PresenterScreenGameOver {
     private WeakReference<CacheGUI> refCacheGUI;
 
-    public PresenterScreenDeath(CacheGUI cacheGUI) {
+    public PresenterScreenGameOver(CacheGUI cacheGUI) {
         this.refCacheGUI = new WeakReference<>(cacheGUI);
     }
 

@@ -15,6 +15,10 @@ public class MonstersWavesData {
     public ArrayList<MonsterData> getMonsters(CacheMeta cacheMeta, int currentWaveIndex, int currentMonsterSpawnIndex, int lastMonsterSpawnIndex) {
         MonstersWave currentWave = getWave(currentWaveIndex);
         if (currentWave == null) return null;
-        return currentWave.getMonsters(cacheMeta,currentMonsterSpawnIndex, lastMonsterSpawnIndex, types);
+        return currentWave.getMonsters(cacheMeta, currentMonsterSpawnIndex, lastMonsterSpawnIndex, types);
+    }
+
+    public int getWavesNum() {
+        return waves == null ? 0 : waves.size();
     }
 }

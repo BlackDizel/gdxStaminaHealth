@@ -8,14 +8,11 @@ import org.byters.game.agilityhealth.controller.data.memorycache.util.MonsterSpa
 import org.byters.game.agilityhealth.view.InputHelper;
 import org.byters.game.agilityhealth.view.InputSettings;
 import org.byters.game.agilityhealth.view.Navigator;
-import org.byters.game.agilityhealth.view.PresenterScreenDeath;
+import org.byters.game.agilityhealth.view.PresenterScreenGameOver;
 import org.byters.game.agilityhealth.view.presenter.IPresenterScreenMenu;
 import org.byters.game.agilityhealth.view.presenter.PresenterScreenGame;
 import org.byters.game.agilityhealth.view.presenter.PresenterScreenMenu;
-import org.byters.game.agilityhealth.view.ui.ScreenDeath;
-import org.byters.game.agilityhealth.view.ui.ScreenGame;
-import org.byters.game.agilityhealth.view.ui.ScreenMenu;
-import org.byters.game.agilityhealth.view.ui.ViewGUI;
+import org.byters.game.agilityhealth.view.ui.*;
 
 public class Injector {
 
@@ -23,6 +20,7 @@ public class Injector {
     private IScreen screenMenu;
     private IScreen screenGame;
     private IScreen screenDeath;
+    private IScreen screenWin;
     private IPresenterScreenMenu presenterScreenMenu;
     private PresenterScreenGame presenterScreenGame;
     private Navigator navigator;
@@ -34,7 +32,7 @@ public class Injector {
     private ViewGUI viewGUI;
     private CacheGUI cacheGUI;
     private CacheMonsters cacheMonsters;
-    private PresenterScreenDeath presenterScreenDeath;
+    private PresenterScreenGameOver presenterScreenDeath;
     private MonsterSpawnHelper monsterSpawnHelper;
     private ControllerJsonBase controllerJsonBase;
 
@@ -56,10 +54,19 @@ public class Injector {
 
     private IScreen getScreenDeath() {
         if (screenDeath == null)
-            screenDeath = new ScreenDeath(getPresenterScreenDeath(),
+            screenDeath = new ScreenDeath(getPresenterScreenGameOver(),
                     engine.getInjector().getControllerResources().getSpriteBatch(),
                     getHelperResources());
         return screenDeath;
+    }
+
+    private IScreen getScreenWin() {
+        if (screenWin == null) screenWin = new ScreenWin(
+                getPresenterScreenGameOver(),
+                engine.getInjector().getControllerResources().getSpriteBatch(),
+                getHelperResources()
+        );
+        return screenWin;
     }
 
     private InputSettings getInputSetting() {
@@ -90,12 +97,13 @@ public class Injector {
                 getCacheGUI(),
                 engine.getInjector().getControllerCamera(),
                 getNavigator(),
-                getScreenDeath());
+                getScreenDeath(),
+                getScreenWin());
         return presenterScreenGame;
     }
 
-    private PresenterScreenDeath getPresenterScreenDeath() {
-        if (presenterScreenDeath == null) presenterScreenDeath = new PresenterScreenDeath(getCacheGUI());
+    private PresenterScreenGameOver getPresenterScreenGameOver() {
+        if (presenterScreenDeath == null) presenterScreenDeath = new PresenterScreenGameOver(getCacheGUI());
         return presenterScreenDeath;
     }
 
