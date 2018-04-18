@@ -107,7 +107,7 @@ public class CacheHero {
         this.isRunPressed = isRun;
     }
 
-    private boolean isMove() {
+    public boolean isMove() {
         return !(deltaY == 0 && deltaX == 0);
     }
 
@@ -126,7 +126,7 @@ public class CacheHero {
         return true;
     }
 
-    private boolean isAttacking() {
+    public boolean isAttacking() {
         return System.currentTimeMillis() - lastTimeAttack < timeAttackDelay;
     }
 
@@ -140,5 +140,9 @@ public class CacheHero {
 
     public boolean isDie() {
         return isDie;
+    }
+
+    public boolean isHeroMoveRight() {
+        return deltaX > 0 || deltaX == 0 && deltaY != 0;
     }
 }

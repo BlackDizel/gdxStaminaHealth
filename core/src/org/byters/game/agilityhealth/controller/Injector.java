@@ -1,7 +1,6 @@
 package org.byters.game.agilityhealth.controller;
 
 import org.byters.engine.Engine;
-import org.byters.engine.controller.ControllerJsonBase;
 import org.byters.engine.view.IScreen;
 import org.byters.game.agilityhealth.controller.data.memorycache.*;
 import org.byters.game.agilityhealth.controller.data.memorycache.util.MonsterSpawnHelper;
@@ -13,6 +12,7 @@ import org.byters.game.agilityhealth.view.presenter.IPresenterScreenMenu;
 import org.byters.game.agilityhealth.view.presenter.PresenterScreenGame;
 import org.byters.game.agilityhealth.view.presenter.PresenterScreenMenu;
 import org.byters.game.agilityhealth.view.ui.*;
+import org.byters.game.agilityhealth.view.ui.util.HeroAnimationHelper;
 
 public class Injector {
 
@@ -34,7 +34,7 @@ public class Injector {
     private CacheMonsters cacheMonsters;
     private PresenterScreenGameOver presenterScreenDeath;
     private MonsterSpawnHelper monsterSpawnHelper;
-    private ControllerJsonBase controllerJsonBase;
+    private HeroAnimationHelper heroAnimationHelper;
 
     private IScreen getScreenMenu() {
         if (screenMenu == null)
@@ -48,8 +48,16 @@ public class Injector {
                     getInputSetting(),
                     getInputHelper(),
                     engine.getInjector().getControllerResources().getSpriteBatch(),
-                    getHelperResources());
+                    getHelperResources(),
+                    getCacheMeta(),
+                    getHeroAnimationHelper());
         return screenGame;
+    }
+
+    private HeroAnimationHelper getHeroAnimationHelper() {
+        if (heroAnimationHelper == null)
+            heroAnimationHelper = new HeroAnimationHelper(engine.getInjector().getControllerResources(), getHelperResources());
+        return heroAnimationHelper;
     }
 
     private IScreen getScreenDeath() {
@@ -103,7 +111,8 @@ public class Injector {
     }
 
     private PresenterScreenGameOver getPresenterScreenGameOver() {
-        if (presenterScreenDeath == null) presenterScreenDeath = new PresenterScreenGameOver(getCacheGUI());
+        if (presenterScreenDeath == null)
+            presenterScreenDeath = new PresenterScreenGameOver(engine.getInjector().getControllerCamera(), getCacheGUI());
         return presenterScreenDeath;
     }
 
@@ -132,18 +141,15 @@ public class Injector {
         getViewGUI().load();
         getNavigator().navigateScreen(getScreenMenu());
         getMonstersSpawnHelper().load();
+        engine.getInjector().getControllerCamera().setZoom(getCacheMeta().cameraZoom);
     }
 
     private MonsterSpawnHelper getMonstersSpawnHelper() {
         if (monsterSpawnHelper == null)
-            monsterSpawnHelper = new MonsterSpawnHelper(getHelperResources(), getCacheMeta(), getControllerJsonBase());
+            monsterSpawnHelper = new MonsterSpawnHelper(getHelperResources(),
+                    getCacheMeta(),
+                    engine.getInjector().getControllerJsonBase());
         return monsterSpawnHelper;
-    }
-
-    private ControllerJsonBase getControllerJsonBase() {
-        if (controllerJsonBase == null)
-            controllerJsonBase = new ControllerJsonBase(); //todo: move this to Engine Injector
-        return controllerJsonBase;
     }
 
     public Engine getEngine() {

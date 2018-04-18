@@ -20,7 +20,7 @@ allprojects {
     ext {
         appName = "AgilityHealth"
         gdxVersion = '1.9.8'
-        engineVersion='0.7'
+        engineVersion='0.11'
     }
 
     repositories {

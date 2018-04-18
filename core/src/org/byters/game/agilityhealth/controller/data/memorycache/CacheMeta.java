@@ -6,8 +6,8 @@ public class CacheMeta {
     public int screenWidth = 640;
     public int screenHeight = 360;
 
-    public float initialHeroPosX = 300;
-    public float initialHeroPosY = 200;
+    public float initialHeroPosX = 390;
+    public float initialHeroPosY = 100;
     public float initialHeroSpeedPixelsPerSecond = 100;
     public float initialHeroSpeedRunPixelsPerSecond = 200;
     public float initialHeroStamina = 100;
@@ -19,13 +19,13 @@ public class CacheMeta {
     public float initialHeroAttackDistanceSquared = 2500;
     public long initialHeroTimeDamagedStaminaRestoreDelayMillis = 1200;
 
-    public int heroMaxX = 600;
-    public int heroMaxY = 320;
-    public int heroMinX = 20;
-    public int heroMinY = 20;
+    public int heroMaxX = 640;
+    public int heroMaxY = 360;
+    public int heroMinX = 0;
+    public int heroMinY = -10;
 
-    public int borefirePosX = 360;
-    public int borefirePosY = 210;
+    public int borefirePosX = 390;
+    public int borefirePosY = 120;
 
     public int uiStaminaBarWidth = 64;
     public int uiStaminaBarHeight = 8;
@@ -43,4 +43,7 @@ public class CacheMeta {
     public float initialHeroStaminaAttackDecreaseValue = 15;
 
     public long initialMonsterTimeStunMillis = 800;
+    public float cameraZoom = 0.5f;
+    public float screenGameBackgroundX = -160;
+    public float screenGameBackgroundY = -90;
 }
