@@ -12,6 +12,7 @@ public class MonsterType {
     private long attackDelay;
     private long attackPrepareMillis;
     private long attackDistanceSquared;
+    private long attackDurationMillis;
 
     public boolean isType(int id) {
         return this.id == id;
@@ -28,7 +29,8 @@ public class MonsterType {
                 cacheMeta.initialMonsterTimeStunMillis,
                 directionCalcDelay,
                 attackDelay,
-                attackPrepareMillis);
+                attackPrepareMillis,
+                attackDurationMillis);
 
     }
 }

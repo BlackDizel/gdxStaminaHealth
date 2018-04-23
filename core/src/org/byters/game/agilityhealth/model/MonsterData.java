@@ -7,6 +7,7 @@ public class MonsterData {
 
     private final float speed;
     private final long timeAttackPrepareMillis;
+    private final long attackDurationMillis;
     private float x, y;
     private float stamina;
 
@@ -26,7 +27,8 @@ public class MonsterData {
                        long stunMillis,
                        long directionCalc,
                        long attackDelayMillis,
-                       long attackPrepareMillis) {
+                       long attackPrepareMillis,
+                       long attackDurationMillis) {
         this.stamina = stamina;
         this.speed = speed;
         monsterAttackDistanceSquared = attackDistanceSquared;
@@ -34,6 +36,7 @@ public class MonsterData {
         this.x = x;
         this.y = y;
         direction = new Vector2();
+        this.attackDurationMillis = attackDurationMillis;
 
         timeStunMillis = stunMillis;
         timeCalcDirectionDelay = directionCalc;
@@ -87,7 +90,7 @@ public class MonsterData {
 
     public float getAttack(float heroPosX, float heroPosY) {
         if (isStun()) return 0;
-        if (isAttack()) return 0;
+        if (isAttackDelay()) return 0;
 
         if (MathHelper.distanceSquared(x, y, heroPosX, heroPosY) > monsterAttackDistanceSquared) return 0;
 
@@ -113,6 +116,10 @@ public class MonsterData {
     }
 
     public boolean isAttack() {
+        return System.currentTimeMillis() - lastTimeAttackMillis < attackDurationMillis;
+    }
+
+    private boolean isAttackDelay() {
         return System.currentTimeMillis() - lastTimeAttackMillis < timeAttackDelayMillis;
     }
 
