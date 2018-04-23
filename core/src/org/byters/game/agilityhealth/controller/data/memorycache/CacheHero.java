@@ -20,6 +20,8 @@ public class CacheHero {
     private long timeDamagedStaminaRestoreDelayMillis;
     private long timeAttackDurationMillis;
 
+    private boolean isRight;
+
     public CacheHero(CacheMeta cacheMeta) {
         this.refCacheMeta = new WeakReference<>(cacheMeta);
         resetCache();
@@ -48,6 +50,8 @@ public class CacheHero {
 
         timeDamagedStaminaRestoreDelayMillis = refCacheMeta.get().initialHeroTimeDamagedStaminaRestoreDelayMillis;
         timeAttackDurationMillis = refCacheMeta.get().initialHeroTimeAttackDurationMillis;
+
+        isRight = true;
     }
 
     public float getHeroPosX() {
@@ -59,9 +63,10 @@ public class CacheHero {
     }
 
     public void move(double angle) {
-
+        if (isAttacking()) return;
         deltaX += Math.cos(angle);
         deltaY += Math.sin(angle);
+        isRight = deltaX > 0;
     }
 
     public void update(float damageRecieved, float deltaTimeSeconds, int minX, int minY, int maxX, int maxY) {
@@ -149,6 +154,6 @@ public class CacheHero {
     }
 
     public boolean isHeroMoveRight() {
-        return deltaX > 0 || deltaX == 0 && deltaY != 0;
+        return isRight;
     }
 }
