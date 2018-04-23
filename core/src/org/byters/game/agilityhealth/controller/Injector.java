@@ -37,6 +37,7 @@ public class Injector {
     private MonsterSpawnHelper monsterSpawnHelper;
     private HeroAnimationHelper heroAnimationHelper;
     private MonstersAnimationHelper monsterAnimationHelper;
+    private FrameBufferDrawer frameBufferDrawer;
 
     private IScreen getScreenMenu() {
         if (screenMenu == null)
@@ -53,13 +54,21 @@ public class Injector {
                     getHelperResources(),
                     getCacheMeta(),
                     getHeroAnimationHelper(),
-                    getMonsterAnimationHelper());
+                    getMonsterAnimationHelper(),
+                    getFrameBufferDrawer());
         return screenGame;
+    }
+
+    private FrameBufferDrawer getFrameBufferDrawer() {
+        if (frameBufferDrawer == null) frameBufferDrawer = new FrameBufferDrawer(
+                engine.getInjector().getControllerResources().getSpriteBatch(),
+                getCacheMeta());
+        return frameBufferDrawer;
     }
 
     private MonstersAnimationHelper getMonsterAnimationHelper() {
         if (monsterAnimationHelper == null)
-            monsterAnimationHelper = new MonstersAnimationHelper(engine.getInjector().getControllerResources(), getHelperResources());
+            monsterAnimationHelper = new MonstersAnimationHelper(engine.getInjector().getControllerResources(), getHelperResources(), getFrameBufferDrawer());
         return monsterAnimationHelper;
     }
 

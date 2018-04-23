@@ -37,7 +37,7 @@ die
   xy: 0, 15
   size: 32, 24
   orig: 32, 24
-  offset: 23, 2
+  offset: 23, 8
   index: -1
 stun
   rotate: false

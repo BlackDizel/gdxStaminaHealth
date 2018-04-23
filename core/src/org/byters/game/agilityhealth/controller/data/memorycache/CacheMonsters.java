@@ -2,6 +2,7 @@ package org.byters.game.agilityhealth.controller.data.memorycache;
 
 import org.byters.game.agilityhealth.controller.data.memorycache.util.MonsterSpawnHelper;
 import org.byters.game.agilityhealth.model.MonsterData;
+import org.byters.game.agilityhealth.view.ui.util.MonstersAnimationHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -33,12 +34,12 @@ public class CacheMonsters {
         resetUnderAttackState();
     }
 
-    public void onUpdate(float delta, float heroPosX, float heroPosY) {
+    public void onUpdate(float delta, float heroPosX, float heroPosY, MonstersAnimationHelper monstersAnimationHelper) {
         checkSpawn();
-        updateMonsters(delta, heroPosX, heroPosY);
+        updateMonsters(monstersAnimationHelper, delta, heroPosX, heroPosY);
     }
 
-    private void updateMonsters(float delta, float heroPosX, float heroPosY) {
+    private void updateMonsters(MonstersAnimationHelper monstersAnimationHelper, float delta, float heroPosX, float heroPosY) {
         damage = 0;
 
         if (data == null || data.size() == 0) return;
@@ -51,6 +52,7 @@ public class CacheMonsters {
                 item.checkAttacked(attackPosX, attackPosY, attackDistanceSquared, damageValue);
 
             if (item.isDie()) {
+                monstersAnimationHelper.addCorpse(item.getPosX(), item.getPosY());
                 itr.remove();
                 continue;
             }

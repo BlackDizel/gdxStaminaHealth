@@ -7,6 +7,7 @@ import org.byters.game.agilityhealth.controller.data.memorycache.CacheHero;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheMeta;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheMonsters;
 import org.byters.game.agilityhealth.view.Navigator;
+import org.byters.game.agilityhealth.view.ui.util.MonstersAnimationHelper;
 
 import java.lang.ref.WeakReference;
 
@@ -55,7 +56,7 @@ public class PresenterScreenGame {
         refCacheHero.get().resetMove();
     }
 
-    public void onUpdate(float delta) {
+    public void onUpdate(float delta, MonstersAnimationHelper monstersAnimationHelper) {
         if (checkDeath()) return;
 
         refCacheHero.get().update(
@@ -68,7 +69,7 @@ public class PresenterScreenGame {
 
         refControllerCamera.get().setPosition(refCacheHero.get().getHeroPosX(), refCacheHero.get().getHeroPosY(), 0);
 
-        refCacheMonsters.get().onUpdate(delta, refCacheHero.get().getHeroPosX(), refCacheHero.get().getHeroPosY());
+        refCacheMonsters.get().onUpdate(delta, refCacheHero.get().getHeroPosX(), refCacheHero.get().getHeroPosY(), monstersAnimationHelper);
 
         updateGUI();
 

@@ -5,11 +5,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import org.byters.engine.controller.ControllerResources;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheResources;
+import org.byters.game.agilityhealth.view.ui.FrameBufferDrawer;
 
 import java.lang.ref.WeakReference;
 
 public class MonstersAnimationHelper {
 
+    private WeakReference<FrameBufferDrawer> refFrameBufferDrawer;
     private WeakReference<CacheResources> refCacheResources;
     private WeakReference<ControllerResources> refControllerResources;
 
@@ -19,9 +21,10 @@ public class MonstersAnimationHelper {
 
     private TextureAtlas tMonsterAtlas;
 
-    public MonstersAnimationHelper(ControllerResources controllerResources, CacheResources cacheMeta) {
+    public MonstersAnimationHelper(ControllerResources controllerResources, CacheResources cacheMeta, FrameBufferDrawer frameBufferDrawer) {
         this.refControllerResources = new WeakReference<>(controllerResources);
         this.refCacheResources = new WeakReference<>(cacheMeta);
+        this.refFrameBufferDrawer = new WeakReference<>(frameBufferDrawer);
     }
 
     public void load() {
@@ -64,5 +67,9 @@ public class MonstersAnimationHelper {
 
     public void dispose() {
         tMonsterAtlas.dispose();
+    }
+
+    public void addCorpse(float posX, float posY) {
+        refFrameBufferDrawer.get().addTexture(tDie, posX - tDie.offsetX, posY - tDie.offsetY);
     }
 }
