@@ -3,7 +3,6 @@ package org.byters.game.agilityhealth.view.ui.util;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.byters.engine.controller.ControllerResources;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheResources;
 
@@ -48,7 +47,7 @@ public class HeroAnimationHelper {
 
     public void draw(SpriteBatch spriteBatch, float heroPosX, float heroPosY, boolean isRight, boolean isAttack, boolean isMove) {
 
-        TextureRegion texture = isRight
+        TextureAtlas.AtlasRegion texture = isRight
                 ? animationStandRight.getKeyFrames()[standFrameNum]
                 : animationStandLeft.getKeyFrames()[standFrameNum];
 
@@ -63,17 +62,10 @@ public class HeroAnimationHelper {
                 ? tAttackRight
                 : tAttackLeft;
 
-        DrawHelper.drawCentered(spriteBatch,
+        spriteBatch.draw(
                 texture,
-                heroPosX + getDeltaX(texture), heroPosY);
-    }
-
-    private float getDeltaX(TextureRegion texture) {
-        return texture == tAttackLeft
-                ? refCacheResources.get().tAttackLeftDeltaX
-                : texture == tAttackRight
-                ? refCacheResources.get().tAttackRightDeltaX
-                : 0;
+                heroPosX - texture.offsetX,
+                heroPosY - texture.offsetY);
     }
 
     public void update(float delta) {
