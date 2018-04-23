@@ -38,7 +38,7 @@ public class MonsterData {
         timeStunMillis = stunMillis;
         timeCalcDirectionDelay = directionCalc;
         timeAttackDelayMillis = attackDelayMillis;
-        this.timeAttackPrepareMillis = attackPrepareMillis;//todo implement
+        this.timeAttackPrepareMillis = attackPrepareMillis;
 
         lastTimeAttackMillis = 0;
         lastTimeStunMillis = 0;
@@ -54,18 +54,12 @@ public class MonsterData {
         }
 
         checkMove(delta);
-
-        //todo try move to hero and attack
     }
 
     private void checkMove(float delta) {
         if (isStun()) return;
         x += direction.x * speed * delta;
         y += direction.y * speed * delta;
-    }
-
-    private boolean isStun() {
-        return System.currentTimeMillis() - lastTimeStunMillis < timeStunMillis;
     }
 
     private boolean isTimeToCalcDirection() {
@@ -93,7 +87,7 @@ public class MonsterData {
 
     public float getAttack(float heroPosX, float heroPosY) {
         if (isStun()) return 0;
-        if (System.currentTimeMillis() - lastTimeAttackMillis < timeAttackDelayMillis) return 0;
+        if (isAttack()) return 0;
 
         if (MathHelper.distanceSquared(x, y, heroPosX, heroPosY) > monsterAttackDistanceSquared) return 0;
 
@@ -110,8 +104,19 @@ public class MonsterData {
         return x;
     }
 
-
     public float getPosY() {
         return y;
+    }
+
+    public boolean isDirectionRight() {
+        return direction.x > 0;
+    }
+
+    public boolean isAttack() {
+        return System.currentTimeMillis() - lastTimeAttackMillis < timeAttackDelayMillis;
+    }
+
+    public boolean isStun() {
+        return System.currentTimeMillis() - lastTimeStunMillis < timeStunMillis;
     }
 }

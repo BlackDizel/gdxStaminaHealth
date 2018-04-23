@@ -156,4 +156,16 @@ public class PresenterScreenGame {
     public boolean isHeroMoving() {
         return refCacheHero.get().isMove();
     }
+
+    public boolean isMonsterDirectionRight(int position) {
+        return refCacheMonsters.get().isMonsterDirectionRight(position);
+    }
+
+    public boolean isMonsterAttack(int position) {
+        return refCacheMonsters.get().isMonsterAttack(position);
+    }
+
+    public boolean isMonsterStun(int position) {
+        return refCacheMonsters.get().isMonsterStun(position);
+    }
 }

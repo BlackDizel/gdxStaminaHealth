@@ -8,14 +8,15 @@ import org.byters.game.agilityhealth.controller.data.memorycache.CacheResources;
 import org.byters.game.agilityhealth.view.InputHelper;
 import org.byters.game.agilityhealth.view.InputSettings;
 import org.byters.game.agilityhealth.view.presenter.PresenterScreenGame;
-import org.byters.game.agilityhealth.view.ui.util.DrawHelper;
 import org.byters.game.agilityhealth.view.ui.util.HelperParticles;
 import org.byters.game.agilityhealth.view.ui.util.HeroAnimationHelper;
+import org.byters.game.agilityhealth.view.ui.util.MonstersAnimationHelper;
 
 import java.lang.ref.WeakReference;
 
 public class ScreenGame implements IScreen {
 
+    private WeakReference<MonstersAnimationHelper> refMonsterAnimationHelper;
     private WeakReference<CacheMeta> refCacheMeta;
     private WeakReference<InputSettings> refInputSettings;
     private WeakReference<CacheResources> refTextureHelper;
@@ -23,7 +24,6 @@ public class ScreenGame implements IScreen {
     private WeakReference<PresenterScreenGame> refPresenterScreenGame;
     private WeakReference<SpriteBatch> refSpriteBatch;
 
-    private Texture tMonster;
     private Texture tBg, tBgForest;
 
     private HelperParticles bonefireParticles, dustParticles;
@@ -35,22 +35,23 @@ public class ScreenGame implements IScreen {
                       SpriteBatch spriteBatch,
                       CacheResources textureHelper,
                       CacheMeta cacheMeta,
-                      HeroAnimationHelper heroAnimationHelper) {
+                      HeroAnimationHelper heroAnimationHelper,
+                      MonstersAnimationHelper monstersAnimationHelper) {
         this.refPresenterScreenGame = new WeakReference<>(presenterScreenGame);
         this.refSpriteBatch = new WeakReference<>(spriteBatch);
         this.refInputHelper = new WeakReference<>(inputHelper);
         this.refTextureHelper = new WeakReference<>(textureHelper);
         this.refInputSettings = new WeakReference<>(inputSettings);
-        this.refCacheMeta= new WeakReference<>(cacheMeta);
+        this.refCacheMeta = new WeakReference<>(cacheMeta);
 
         bonefireParticles = new HelperParticles();
         dustParticles = new HelperParticles();
         refHeroAnimationHelper = new WeakReference<>(heroAnimationHelper);
+        refMonsterAnimationHelper = new WeakReference<>(monstersAnimationHelper);
     }
 
     @Override
     public void draw() {
-        //todo draw enemies
         refSpriteBatch.get().draw(tBg,
                 refCacheMeta.get().screenGameBackgroundX,
                 refCacheMeta.get().screenGameBackgroundY);
@@ -77,16 +78,19 @@ public class ScreenGame implements IScreen {
 
     private void drawMonsters() {
         if (!refPresenterScreenGame.get().isMonstersExist()) return;
-        for (int i = 0; i < refPresenterScreenGame.get().getMonstersNum(); ++i) {
-            DrawHelper.drawCentered(refSpriteBatch.get(), tMonster, refPresenterScreenGame.get().getMonsterPosX(i), refPresenterScreenGame.get().getMonsterPosY(i));
-        }
+        for (int i = 0; i < refPresenterScreenGame.get().getMonstersNum(); ++i)
+            refMonsterAnimationHelper.get().draw(refSpriteBatch.get(),
+                    refPresenterScreenGame.get().getMonsterPosX(i),
+                    refPresenterScreenGame.get().getMonsterPosY(i),
+                    refPresenterScreenGame.get().isMonsterDirectionRight(i),
+                    refPresenterScreenGame.get().isMonsterAttack(i),
+                    refPresenterScreenGame.get().isMonsterStun(i));
     }
 
     @Override
     public void load() {
         tBg = new Texture(refTextureHelper.get().TEXTURE_GAME_BG);
         tBgForest = new Texture(refTextureHelper.get().TEXTURE_GAME_BG_FOREST);
-        tMonster = new Texture(refTextureHelper.get().TEXTURE_MONSTER);
         bonefireParticles.load(refTextureHelper.get().PARTICLES_FILE_BONEFIRE,
                 refTextureHelper.get().FOLDER_PARTICLES_SPRITE);
         dustParticles.load(refTextureHelper.get().PARTICLES_FILE_DUST,
@@ -94,6 +98,7 @@ public class ScreenGame implements IScreen {
 
         refPresenterScreenGame.get().onLoad();
         refHeroAnimationHelper.get().load();
+        refMonsterAnimationHelper.get().load();
     }
 
     @Override
@@ -105,6 +110,7 @@ public class ScreenGame implements IScreen {
         dustParticles.update(delta);
         bonefireParticles.update(delta);
         refHeroAnimationHelper.get().update(delta);
+        refMonsterAnimationHelper.get().update(delta);
     }
 
     @Override
@@ -112,7 +118,6 @@ public class ScreenGame implements IScreen {
         checkMove();
         checkRun();
         checkAttack();
-        //todo input hero
     }
 
     private void checkAttack() {
@@ -145,9 +150,9 @@ public class ScreenGame implements IScreen {
     @Override
     public void dispose() {
         tBg.dispose();
-        tMonster.dispose();
         bonefireParticles.dispose();
         dustParticles.dispose();
         refHeroAnimationHelper.get().dispose();
+        refMonsterAnimationHelper.get().dispose();
     }
 }

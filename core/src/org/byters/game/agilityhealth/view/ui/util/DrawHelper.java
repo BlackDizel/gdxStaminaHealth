@@ -12,4 +12,8 @@ public class DrawHelper {
     public static void drawCentered(SpriteBatch spriteBatch, TextureRegion texture, float x, float y) {
         spriteBatch.draw(texture, x - texture.getRegionWidth() / 2, y - texture.getRegionHeight() / 2);
     }
+
+    public static void drawCentered(SpriteBatch spriteBatch, TextureRegion texture, float x, float y, boolean isRight) {
+        spriteBatch.draw(texture, x - texture.getRegionWidth() / 2, y - texture.getRegionHeight() / 2, texture.getRegionWidth() * (isRight ? 1 : -1), texture.getRegionHeight());
+    }
 }

@@ -1,0 +1,55 @@
+
+monster_atlas.png
+size: 128,68
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+m0
+  rotate: false
+  xy: 0, 0
+  size: 32, 15
+  orig: 32, 15
+  offset: 0, 0
+  index: -1
+m1
+  rotate: false
+  xy: 32, 0
+  size: 32, 15
+  orig: 32, 15
+  offset: 0, 0
+  index: -1
+m2
+  rotate: false
+  xy: 64, 0
+  size: 32, 15
+  orig: 32, 15
+  offset: 0, 0
+  index: -1
+m3
+  rotate: false
+  xy: 96, 0
+  size: 32, 15
+  orig: 32, 15
+  offset: 0, 0
+  index: -1
+die
+  rotate: false
+  xy: 0, 15
+  size: 32, 24
+  orig: 32, 24
+  offset: 0, 0
+  index: -1
+stun
+  rotate: false
+  xy: 32, 15
+  size: 32, 24
+  orig: 32, 24
+  offset: 0, 0
+  index: -1
+attack
+  rotate: false
+  xy: 0, 39
+  size: 60, 28
+  orig: 60, 28
+  offset: 0, 0
+  index: -1

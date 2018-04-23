@@ -110,4 +110,16 @@ public class CacheMonsters {
     public boolean isAllMonstersDefeated() {
         return refMonsterSpawnHelper.get().isAllWavesDefeated(data);
     }
+
+    public boolean isMonsterDirectionRight(int position) {
+        return data == null || data.size() <= position ? false : data.get(position).isDirectionRight();
+    }
+
+    public boolean isMonsterAttack(int position) {
+        return data == null || data.size() <= position ? false : data.get(position).isAttack();
+    }
+
+    public boolean isMonsterStun(int position) {
+        return data == null || data.size() <= position ? false : data.get(position).isStun();
+    }
 }

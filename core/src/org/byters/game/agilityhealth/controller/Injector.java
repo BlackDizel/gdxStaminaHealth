@@ -13,6 +13,7 @@ import org.byters.game.agilityhealth.view.presenter.PresenterScreenGame;
 import org.byters.game.agilityhealth.view.presenter.PresenterScreenMenu;
 import org.byters.game.agilityhealth.view.ui.*;
 import org.byters.game.agilityhealth.view.ui.util.HeroAnimationHelper;
+import org.byters.game.agilityhealth.view.ui.util.MonstersAnimationHelper;
 
 public class Injector {
 
@@ -35,6 +36,7 @@ public class Injector {
     private PresenterScreenGameOver presenterScreenDeath;
     private MonsterSpawnHelper monsterSpawnHelper;
     private HeroAnimationHelper heroAnimationHelper;
+    private MonstersAnimationHelper monsterAnimationHelper;
 
     private IScreen getScreenMenu() {
         if (screenMenu == null)
@@ -50,8 +52,15 @@ public class Injector {
                     engine.getInjector().getControllerResources().getSpriteBatch(),
                     getHelperResources(),
                     getCacheMeta(),
-                    getHeroAnimationHelper());
+                    getHeroAnimationHelper(),
+                    getMonsterAnimationHelper());
         return screenGame;
+    }
+
+    private MonstersAnimationHelper getMonsterAnimationHelper() {
+        if (monsterAnimationHelper == null)
+            monsterAnimationHelper = new MonstersAnimationHelper(engine.getInjector().getControllerResources(), getHelperResources());
+        return monsterAnimationHelper;
     }
 
     private HeroAnimationHelper getHeroAnimationHelper() {

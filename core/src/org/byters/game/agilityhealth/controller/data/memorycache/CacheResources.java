@@ -1,7 +1,6 @@
 package org.byters.game.agilityhealth.controller.data.memorycache;
 
 public class CacheResources {
-    public String TEXTURE_MONSTER = "graphics/monster/monster.png";
     public String TEXTURE_BG_MAINMENU = "graphics/screens/mainmenu/bg.jpg";
     public String TEXTURE_BG_DEATHSCREEN = "graphics/screens/deathscreen/bg.jpg";
     public String TEXTURE_BG_WINSCREEN = "graphics/screens/winscreen/bg.jpg";
@@ -32,4 +31,13 @@ public class CacheResources {
     public String REGION_HERO_STAND_LEFT_1 = "sl1";
     public String REGION_HERO_STAND_RIGHT_0 = "sr0";
     public String REGION_HERO_STAND_RIGHT_1 = "sr1";
+
+    public float ANIMATION_MONSTER_MOVE_FPS = 5f;
+    public String REGION_MONSTER_ATTACK = "attack";
+    public String REGION_MONSTER_STUN = "stun";
+    public String REGION_MONSTER_DIE = "die";
+    public String REGION_MONSTER_MOVE_0 = "m0";
+    public String REGION_MONSTER_MOVE_1 = "m1";
+    public String REGION_MONSTER_MOVE_2 = "m2";
+    public String REGION_MONSTER_MOVE_3 = "m3";
 }
