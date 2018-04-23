@@ -50,7 +50,12 @@ public class MonstersAnimationHelper {
         if (isStun)
             texture = tStun;
 
-        DrawHelper.drawCentered(spriteBatch, texture, monsterPosX, monsterPosY, isRight);
+
+        DrawHelper.draw(spriteBatch,
+                texture,
+                monsterPosX - texture.offsetX,
+                monsterPosY - texture.offsetY,
+                isRight);
     }
 
     public void update(float delta) {

@@ -9,47 +9,47 @@ move
   xy: 0, 0
   size: 32, 15
   orig: 32, 15
-  offset: 0, 0
+  offset: 16, 7
   index: 0
 move
   rotate: false
   xy: 32, 0
   size: 32, 15
   orig: 32, 15
-  offset: 0, 0
+  offset: 16, 7
   index: 1
 move
   rotate: false
   xy: 64, 0
   size: 32, 15
   orig: 32, 15
-  offset: 0, 0
+  offset: 16, 7
   index: 2
 move
   rotate: false
   xy: 96, 0
   size: 32, 15
   orig: 32, 15
-  offset: 0, 0
+  offset: 16, 7
   index: 3
 die
   rotate: false
   xy: 0, 15
   size: 32, 24
   orig: 32, 24
-  offset: 0, 0
+  offset: 23, 2
   index: -1
 stun
   rotate: false
   xy: 32, 15
   size: 32, 24
   orig: 32, 24
-  offset: 0, 0
+  offset: 15, 10
   index: -1
 attack
   rotate: false
   xy: 0, 39
   size: 60, 28
   orig: 60, 28
-  offset: 0, 0
+  offset: 16, 7
   index: -1

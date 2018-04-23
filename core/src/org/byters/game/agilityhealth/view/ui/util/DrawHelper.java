@@ -2,6 +2,7 @@ package org.byters.game.agilityhealth.view.ui.util;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class DrawHelper {
@@ -15,5 +16,9 @@ public class DrawHelper {
 
     public static void drawCentered(SpriteBatch spriteBatch, TextureRegion texture, float x, float y, boolean isRight) {
         spriteBatch.draw(texture, x - texture.getRegionWidth() / 2, y - texture.getRegionHeight() / 2, texture.getRegionWidth() * (isRight ? 1 : -1), texture.getRegionHeight());
+    }
+
+    public static void draw(SpriteBatch spriteBatch, TextureAtlas.AtlasRegion texture, float x, float y, boolean isRight) {
+        spriteBatch.draw(texture, x, y, texture.getRegionWidth() * (isRight ? 1 : -1), texture.getRegionHeight());
     }
 }
