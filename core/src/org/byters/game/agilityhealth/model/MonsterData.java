@@ -47,7 +47,7 @@ public class MonsterData {
 
     public void update(float delta, float heroPosX, float heroPosY) {
 
-        if (isTimeToCalcDirection()) {
+        if (isTimeToCalcDirection() && !isAttack() && !isStun()) {
             direction.x = heroPosX - x;
             direction.y = heroPosY - y;
             direction.nor();
@@ -57,7 +57,7 @@ public class MonsterData {
     }
 
     private void checkMove(float delta) {
-        if (isStun()) return;
+        if (isStun() || isAttack()) return;
         x += direction.x * speed * delta;
         y += direction.y * speed * delta;
     }
