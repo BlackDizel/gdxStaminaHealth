@@ -4,90 +4,90 @@ size: 128,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-ml0
+ml
   rotate: false
   xy: 0, 0
   size: 32, 30
   orig: 32, 30
   offset: 0, 0
-  index: -1
-ml1
+  index: 0
+ml
   rotate: false
   xy: 32, 0
   size: 32, 30
   orig: 32, 30
   offset: 0, 0
-  index: -1
-ml2
+  index: 1
+ml
   rotate: false
   xy: 64, 0
   size: 32, 30
   orig: 32, 30
   offset: 0, 0
-  index: -1
-ml3
+  index: 2
+ml
   rotate: false
   xy: 96, 0
   size: 32, 30
   orig: 32, 30
   offset: 0, 0
-  index: -1
-mr0
+  index: 3
+mr
   rotate: false
   xy: 0, 30
   size: 32, 30
   orig: 32, 30
   offset: 0, 0
-  index: -1
-mr1
+  index: 0
+mr
   rotate: false
   xy: 32, 30
   size: 32, 30
   orig: 32, 30
   offset: 0, 0
-  index: -1
-mr2
+  index: 1
+mr
   rotate: false
   xy: 64, 30
   size: 32, 30
   orig: 32, 30
   offset: 0, 0
-  index: -1
-mr3
+  index: 2
+mr
   rotate: false
   xy: 96, 30
   size: 32, 30
   orig: 32, 30
   offset: 0, 0
-  index: -1
-sl0
+  index: 3
+sl
   rotate: false
   xy: 0, 60
   size: 32, 30
   orig: 32, 30
   offset: 0, 0
-  index: -1
-sl1
+  index: 0
+sl
   rotate: false
   xy: 32, 60
   size: 32, 30
   orig: 32, 30
   offset: 0, 0
-  index: -1
-sr0
+  index: 1
+sr
   rotate: false
   xy: 64, 60
   size: 32, 30
   orig: 32, 30
   offset: 0, 0
-  index: -1
-sr1
+  index: 0
+sr
   rotate: false
   xy: 96, 60
   size: 32, 30
   orig: 32, 30
   offset: 0, 0
-  index: -1
+  index: 1
 al
   rotate: false
   xy: 0, 90

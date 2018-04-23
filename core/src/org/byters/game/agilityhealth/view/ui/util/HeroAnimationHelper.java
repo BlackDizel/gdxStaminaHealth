@@ -13,8 +13,8 @@ public class HeroAnimationHelper {
     private WeakReference<CacheResources> refCacheResources;
     private WeakReference<ControllerResources> refControllerResources;
 
-    private Animation<TextureRegion> animationMoveRight, animationMoveLeft, animationStandLeft, animationStandRight;
-    private TextureRegion tAttackRight, tAttackLeft;
+    private Animation<TextureAtlas.AtlasRegion> animationMoveRight, animationMoveLeft, animationStandLeft, animationStandRight;
+    private TextureAtlas.AtlasRegion tAttackRight, tAttackLeft;
     private int moveFrameNum;
     private int standFrameNum;
 
@@ -32,36 +32,16 @@ public class HeroAnimationHelper {
         tAttackRight = tHeroAtlas.findRegion(refCacheResources.get().REGION_HERO_ATTACK_RIGHT);
         tAttackLeft = tHeroAtlas.findRegion(refCacheResources.get().REGION_HERO_ATTACK_LEFT);
 
-        TextureRegion[] framesMoveRight = new TextureRegion[4];
-        framesMoveRight[0] = tHeroAtlas.findRegion(refCacheResources.get().REGION_HERO_MOVE_RIGHT_0);
-        framesMoveRight[1] = tHeroAtlas.findRegion(refCacheResources.get().REGION_HERO_MOVE_RIGHT_1);
-        framesMoveRight[2] = tHeroAtlas.findRegion(refCacheResources.get().REGION_HERO_MOVE_RIGHT_2);
-        framesMoveRight[3] = tHeroAtlas.findRegion(refCacheResources.get().REGION_HERO_MOVE_RIGHT_3);
-
-        TextureRegion[] framesMoveLeft = new TextureRegion[4];
-        framesMoveLeft[0] = tHeroAtlas.findRegion(refCacheResources.get().REGION_HERO_MOVE_LEFT_0);
-        framesMoveLeft[1] = tHeroAtlas.findRegion(refCacheResources.get().REGION_HERO_MOVE_LEFT_1);
-        framesMoveLeft[2] = tHeroAtlas.findRegion(refCacheResources.get().REGION_HERO_MOVE_LEFT_2);
-        framesMoveLeft[3] = tHeroAtlas.findRegion(refCacheResources.get().REGION_HERO_MOVE_LEFT_3);
-
-        TextureRegion[] framesStandLeft = new TextureRegion[2];
-        framesStandLeft[0] = tHeroAtlas.findRegion(refCacheResources.get().REGION_HERO_STAND_LEFT_0);
-        framesStandLeft[1] = tHeroAtlas.findRegion(refCacheResources.get().REGION_HERO_STAND_LEFT_1);
-
-        TextureRegion[] framesStandRight = new TextureRegion[2];
-        framesStandRight[0] = tHeroAtlas.findRegion(refCacheResources.get().REGION_HERO_STAND_RIGHT_0);
-        framesStandRight[1] = tHeroAtlas.findRegion(refCacheResources.get().REGION_HERO_STAND_RIGHT_1);
-
-        animationMoveRight = new Animation<>(1/refCacheResources.get().ANIMATION_HERO_MOVE_FPS, framesMoveRight);
+        animationMoveRight = new Animation<>(1 / refCacheResources.get().ANIMATION_HERO_MOVE_FPS, tHeroAtlas.findRegions(refCacheResources.get().REGION_HERO_MOVE_RIGHT));
         animationMoveRight.setPlayMode(Animation.PlayMode.LOOP);
 
-        animationMoveLeft = new Animation<>(1/refCacheResources.get().ANIMATION_HERO_MOVE_FPS, framesMoveLeft);
+        animationMoveLeft = new Animation<>(1 / refCacheResources.get().ANIMATION_HERO_MOVE_FPS, tHeroAtlas.findRegions(refCacheResources.get().REGION_HERO_MOVE_LEFT));
         animationMoveLeft.setPlayMode(Animation.PlayMode.LOOP);
 
-        animationStandLeft = new Animation<>(1/refCacheResources.get().ANIMATION_HERO_STAND_FPS, framesStandLeft);
+        animationStandLeft = new Animation<>(1 / refCacheResources.get().ANIMATION_HERO_STAND_FPS, tHeroAtlas.findRegions(refCacheResources.get().REGION_HERO_STAND_LEFT));
         animationStandLeft.setPlayMode(Animation.PlayMode.LOOP);
 
-        animationStandRight = new Animation<>(1/refCacheResources.get().ANIMATION_HERO_STAND_FPS, framesStandRight);
+        animationStandRight = new Animation<>(1 / refCacheResources.get().ANIMATION_HERO_STAND_FPS, tHeroAtlas.findRegions(refCacheResources.get().REGION_HERO_STAND_RIGHT));
         animationStandRight.setPlayMode(Animation.PlayMode.LOOP);
 
     }

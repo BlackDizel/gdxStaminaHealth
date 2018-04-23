@@ -3,7 +3,6 @@ package org.byters.game.agilityhealth.view.ui.util;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.byters.engine.controller.ControllerResources;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheResources;
 
@@ -14,8 +13,8 @@ public class MonstersAnimationHelper {
     private WeakReference<CacheResources> refCacheResources;
     private WeakReference<ControllerResources> refControllerResources;
 
-    private Animation<TextureRegion> animationMove;
-    private TextureRegion tAttack, tStun, tDie;
+    private Animation<TextureAtlas.AtlasRegion> animationMove;
+    private TextureAtlas.AtlasRegion tAttack, tStun, tDie;
     private int moveFrameNum;
 
     private TextureAtlas tMonsterAtlas;
@@ -32,13 +31,9 @@ public class MonstersAnimationHelper {
         tStun = tMonsterAtlas.findRegion(refCacheResources.get().REGION_MONSTER_STUN);
         tDie = tMonsterAtlas.findRegion(refCacheResources.get().REGION_MONSTER_DIE);
 
-        TextureRegion[] framesMoveRight = new TextureRegion[4];
-        framesMoveRight[0] = tMonsterAtlas.findRegion(refCacheResources.get().REGION_MONSTER_MOVE_0);
-        framesMoveRight[1] = tMonsterAtlas.findRegion(refCacheResources.get().REGION_MONSTER_MOVE_1);
-        framesMoveRight[2] = tMonsterAtlas.findRegion(refCacheResources.get().REGION_MONSTER_MOVE_2);
-        framesMoveRight[3] = tMonsterAtlas.findRegion(refCacheResources.get().REGION_MONSTER_MOVE_3);
-
-        animationMove = new Animation<>(1 / refCacheResources.get().ANIMATION_MONSTER_MOVE_FPS, framesMoveRight);
+        animationMove = new Animation<>(
+                1 / refCacheResources.get().ANIMATION_MONSTER_MOVE_FPS,
+                tMonsterAtlas.findRegions(refCacheResources.get().REGION_MONSTER_MOVE));
         animationMove.setPlayMode(Animation.PlayMode.LOOP);
     }
 
@@ -49,7 +44,7 @@ public class MonstersAnimationHelper {
                      boolean isAttack,
                      boolean isStun) {
 
-        TextureRegion texture = animationMove.getKeyFrames()[moveFrameNum];
+        TextureAtlas.AtlasRegion texture = animationMove.getKeyFrames()[moveFrameNum];
         if (isAttack)
             texture = tAttack;
         if (isStun)

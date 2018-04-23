@@ -19,25 +19,14 @@ public class CacheResources {
     public float ANIMATION_HERO_STAND_FPS = 2.5f;
     public String REGION_HERO_ATTACK_RIGHT = "ar";
     public String REGION_HERO_ATTACK_LEFT = "al";
-    public String REGION_HERO_MOVE_RIGHT_0 = "mr0";
-    public String REGION_HERO_MOVE_RIGHT_1 = "mr1";
-    public String REGION_HERO_MOVE_RIGHT_2 = "mr2";
-    public String REGION_HERO_MOVE_RIGHT_3 = "mr3";
-    public String REGION_HERO_MOVE_LEFT_0 = "ml0";
-    public String REGION_HERO_MOVE_LEFT_1 = "ml1";
-    public String REGION_HERO_MOVE_LEFT_2 = "ml2";
-    public String REGION_HERO_MOVE_LEFT_3 = "ml3";
-    public String REGION_HERO_STAND_LEFT_0 = "sl0";
-    public String REGION_HERO_STAND_LEFT_1 = "sl1";
-    public String REGION_HERO_STAND_RIGHT_0 = "sr0";
-    public String REGION_HERO_STAND_RIGHT_1 = "sr1";
+    public String REGION_HERO_MOVE_RIGHT = "mr";
+    public String REGION_HERO_MOVE_LEFT = "ml";
+    public String REGION_HERO_STAND_LEFT = "sl";
+    public String REGION_HERO_STAND_RIGHT = "sr";
 
     public float ANIMATION_MONSTER_MOVE_FPS = 5f;
     public String REGION_MONSTER_ATTACK = "attack";
     public String REGION_MONSTER_STUN = "stun";
     public String REGION_MONSTER_DIE = "die";
-    public String REGION_MONSTER_MOVE_0 = "m0";
-    public String REGION_MONSTER_MOVE_1 = "m1";
-    public String REGION_MONSTER_MOVE_2 = "m2";
-    public String REGION_MONSTER_MOVE_3 = "m3";
+    public String REGION_MONSTER_MOVE = "move";
 }

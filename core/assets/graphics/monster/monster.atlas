@@ -4,34 +4,34 @@ size: 128,68
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-m0
+move
   rotate: false
   xy: 0, 0
   size: 32, 15
   orig: 32, 15
   offset: 0, 0
-  index: -1
-m1
+  index: 0
+move
   rotate: false
   xy: 32, 0
   size: 32, 15
   orig: 32, 15
   offset: 0, 0
-  index: -1
-m2
+  index: 1
+move
   rotate: false
   xy: 64, 0
   size: 32, 15
   orig: 32, 15
   offset: 0, 0
-  index: -1
-m3
+  index: 2
+move
   rotate: false
   xy: 96, 0
   size: 32, 15
   orig: 32, 15
   offset: 0, 0
-  index: -1
+  index: 3
 die
   rotate: false
   xy: 0, 15
