@@ -28,9 +28,9 @@ public class CacheMeta {
     public int borefirePosX = 390;
     public int borefirePosY = 120;
 
-    public int uiStaminaBarWidth = 64;
-    public int uiStaminaBarHeight = 8;
-    public int uiStaminaBarBorderWidth = 2;
+    public int uiStaminaBarWidth = 32;
+    public int uiStaminaBarHeight = 4;
+    public int uiStaminaBarBorderWidth = 1;
     public int uiStaminaBarBorderDistance = 1;
 
     public float staminaBarHigh = 0.9f;
@@ -39,7 +39,7 @@ public class CacheMeta {
     public Color staminaBarColorHigh = Color.YELLOW;
     public Color staminaBarColorMedium = Color.RED;
 
-    public float staminaBarDeltaX = -36;
+    public float staminaBarDeltaX = -16;
     public float staminaBarDeltaY = -36;
     public float initialHeroStaminaAttackDecreaseValue = 15;
 
