@@ -2,6 +2,7 @@ package org.byters.game.agilityhealth.view.ui;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import org.byters.engine.controller.ControllerResources;
 import org.byters.engine.view.IScreen;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheMeta;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheResources;
@@ -17,13 +18,13 @@ import java.lang.ref.WeakReference;
 public class ScreenGame implements IScreen {
 
     private WeakReference<FrameBufferDrawer> refFrameBufferDrawer;
-    private WeakReference<MonstersAnimationHelper> refMonsterAnimationHelper;
     private WeakReference<CacheMeta> refCacheMeta;
     private WeakReference<InputSettings> refInputSettings;
     private WeakReference<CacheResources> refTextureHelper;
     private WeakReference<InputHelper> refInputHelper;
     private WeakReference<PresenterScreenGame> refPresenterScreenGame;
     private WeakReference<SpriteBatch> refSpriteBatch;
+    private WeakReference<MonstersAnimationHelper> refMonstersAnimationHelper;
 
     private Texture tBg, tBgForest;
 
@@ -33,24 +34,25 @@ public class ScreenGame implements IScreen {
     public ScreenGame(PresenterScreenGame presenterScreenGame,
                       InputSettings inputSettings,
                       InputHelper inputHelper,
-                      SpriteBatch spriteBatch,
                       CacheResources textureHelper,
                       CacheMeta cacheMeta,
                       HeroAnimationHelper heroAnimationHelper,
-                      MonstersAnimationHelper monstersAnimationHelper,
-                      FrameBufferDrawer frameBufferDrawer) {
+                      FrameBufferDrawer frameBufferDrawer,
+                      ControllerResources controllerResources,
+                      MonstersAnimationHelper monstersAnimationHelper) {
+
         this.refPresenterScreenGame = new WeakReference<>(presenterScreenGame);
-        this.refSpriteBatch = new WeakReference<>(spriteBatch);
+        this.refSpriteBatch = new WeakReference<>(controllerResources.getSpriteBatch());
         this.refInputHelper = new WeakReference<>(inputHelper);
         this.refTextureHelper = new WeakReference<>(textureHelper);
         this.refInputSettings = new WeakReference<>(inputSettings);
         this.refCacheMeta = new WeakReference<>(cacheMeta);
         this.refFrameBufferDrawer = new WeakReference<>(frameBufferDrawer);
+        this.refMonstersAnimationHelper = new WeakReference<>(monstersAnimationHelper);
 
         bonefireParticles = new HelperParticles();
         dustParticles = new HelperParticles();
         refHeroAnimationHelper = new WeakReference<>(heroAnimationHelper);
-        refMonsterAnimationHelper = new WeakReference<>(monstersAnimationHelper);
     }
 
     @Override
@@ -83,13 +85,7 @@ public class ScreenGame implements IScreen {
 
     private void drawMonsters() {
         if (!refPresenterScreenGame.get().isMonstersExist()) return;
-        for (int i = 0; i < refPresenterScreenGame.get().getMonstersNum(); ++i)
-            refMonsterAnimationHelper.get().draw(refSpriteBatch.get(),
-                    refPresenterScreenGame.get().getMonsterPosX(i),
-                    refPresenterScreenGame.get().getMonsterPosY(i),
-                    refPresenterScreenGame.get().isMonsterDirectionRight(i),
-                    refPresenterScreenGame.get().isMonsterAttack(i),
-                    refPresenterScreenGame.get().isMonsterStun(i));
+        refMonstersAnimationHelper.get().draw(refSpriteBatch.get(), refPresenterScreenGame.get());
     }
 
     @Override
@@ -103,20 +99,19 @@ public class ScreenGame implements IScreen {
 
         refPresenterScreenGame.get().onLoad();
         refHeroAnimationHelper.get().load();
-        refMonsterAnimationHelper.get().load();
+        refMonstersAnimationHelper.get().load();
         refFrameBufferDrawer.get().load();
     }
 
     @Override
     public void update(float delta) {
-        refPresenterScreenGame.get().onUpdate(delta, refMonsterAnimationHelper.get());
+        refPresenterScreenGame.get().onUpdate(delta, refMonstersAnimationHelper.get());
 
         dustParticles.play(refPresenterScreenGame.get().isDrawDust());
 
         dustParticles.update(delta);
         bonefireParticles.update(delta);
         refHeroAnimationHelper.get().update(delta);
-        refMonsterAnimationHelper.get().update(delta);
     }
 
     @Override
@@ -159,7 +154,7 @@ public class ScreenGame implements IScreen {
         bonefireParticles.dispose();
         dustParticles.dispose();
         refHeroAnimationHelper.get().dispose();
-        refMonsterAnimationHelper.get().dispose();
+        refMonstersAnimationHelper.get().dispose();
         refFrameBufferDrawer.get().dispose();
     }
 }

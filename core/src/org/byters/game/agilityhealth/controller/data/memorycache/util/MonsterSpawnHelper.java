@@ -9,12 +9,14 @@ import org.byters.game.agilityhealth.model.MonstersWavesData;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MonsterSpawnHelper {
 
     private WeakReference<CacheMeta> refCacheMeta;
     private WeakReference<ControllerJsonBase> refControllerJsonBase;
     private WeakReference<CacheResources> refCacheResources;
+    private WeakReference<Random> refRandom;
     private MonstersWavesData data;
     private long spawnTimeStart;
     private int currentWaveIndex;
@@ -22,10 +24,12 @@ public class MonsterSpawnHelper {
 
     public MonsterSpawnHelper(CacheResources cacheResources,
                               CacheMeta cacheMeta,
-                              ControllerJsonBase controllerJsonBase) {
+                              ControllerJsonBase controllerJsonBase,
+                              Random random) {
         this.refCacheResources = new WeakReference<>(cacheResources);
         this.refControllerJsonBase = new WeakReference<>(controllerJsonBase);
         this.refCacheMeta = new WeakReference<>(cacheMeta);
+        this.refRandom = new WeakReference<>(random);
         resetData();
     }
 
@@ -59,7 +63,7 @@ public class MonsterSpawnHelper {
         int lastMonsterSpawnIndex = currentWaveData.getLastMonsterSpawnIndex(spawnTimeStart);
         if (lastMonsterSpawnIndex <= currentMonsterSpawnIndex) return;
 
-        ArrayList<MonsterData> monstersAdd = data.getMonsters(refCacheMeta.get(), currentWaveIndex, currentMonsterSpawnIndex, lastMonsterSpawnIndex);
+        ArrayList<MonsterData> monstersAdd = data.getMonsters(refCacheMeta.get(), currentWaveIndex, currentMonsterSpawnIndex, lastMonsterSpawnIndex, refRandom.get());
         currentMonsterSpawnIndex = lastMonsterSpawnIndex + 1;
         if (monstersAdd == null) return;
 
@@ -73,5 +77,13 @@ public class MonsterSpawnHelper {
     private void resetWaveData() {
         spawnTimeStart = System.currentTimeMillis();
         currentMonsterSpawnIndex = -1;
+    }
+
+    public int getMonsterTypesNum() {
+        return data == null ? 0 : data.getTypesNum();
+    }
+
+    public int getMonsterType(int position) {
+        return data == null ? 0 : data.getMonsterType(position);
     }
 }

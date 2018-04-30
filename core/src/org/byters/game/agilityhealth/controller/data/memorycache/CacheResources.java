@@ -11,10 +11,14 @@ public class CacheResources {
     public String PARTICLES_FILE_DUST = "particles/dust.p";
     public String JSON_MONSTERS_WAVES = "json/monsters.json";
     public String TEXTURE_ATLAS_HERO = "graphics/hero/hero.atlas";
-    public String TEXTURE_ATLAS_MONSTER = "graphics/monster/monster.atlas";
+    public String TEXTURE_ATLAS_MONSTER[] = {
+            "graphics/monster/monster.atlas",
+            "graphics/monster/monster.atlas",
+            "graphics/monster/monster.atlas",
+            "graphics/monster/monster.atlas",
+            "graphics/monster/monster.atlas",
+            "graphics/monster/boar.atlas"};
 
-    public float tAttackLeftDeltaX = -15;
-    public float tAttackRightDeltaX = 15;
     public float ANIMATION_HERO_MOVE_FPS = 5f;
     public float ANIMATION_HERO_STAND_FPS = 2.5f;
     public String REGION_HERO_ATTACK_RIGHT = "ar";

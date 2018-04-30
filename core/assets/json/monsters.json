@@ -10,7 +10,7 @@
       "attackDelay": 2000,
       "attackPrepareMillis": 200,
       "attackDistanceSquared": 100,
-      "attackDurationMillis":250
+      "attackDurationMillis": 250
     },
     {
       "title": "middle beast",
@@ -22,7 +22,7 @@
       "attackDelay": 2000,
       "attackPrepareMillis": 200,
       "attackDistanceSquared": 100,
-      "attackDurationMillis":250
+      "attackDurationMillis": 250
     },
     {
       "title": "small fast beast",
@@ -33,7 +33,7 @@
       "directionCalcDelay": 800,
       "attackDelay": 2000,
       "attackDistanceSquared": 100,
-      "attackDurationMillis":250
+      "attackDurationMillis": 250
     },
     {
       "title": "large beast",
@@ -45,7 +45,7 @@
       "attackDelay": 2000,
       "attackPrepareMillis": 200,
       "attackDistanceSquared": 10000,
-      "attackDurationMillis":250
+      "attackDurationMillis": 250
     },
     {
       "title": "boss",
@@ -57,7 +57,7 @@
       "attackDelay": 2000,
       "attackPrepareMillis": 200,
       "attackDistanceSquared": 10000,
-      "attackDurationMillis":350
+      "attackDurationMillis": 750
     }
   ],
   "waves": [

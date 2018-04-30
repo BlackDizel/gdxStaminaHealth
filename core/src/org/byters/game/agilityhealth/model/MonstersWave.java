@@ -3,6 +3,7 @@ package org.byters.game.agilityhealth.model;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheMeta;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MonstersWave {
     private ArrayList<MonsterSpawnInfo> items;
@@ -28,7 +29,7 @@ public class MonstersWave {
         return 0;
     }
 
-    public ArrayList<MonsterData> getMonsters(CacheMeta cacheMeta, int indexStart, int indexEnd, ArrayList<MonsterType> types) {
+    public ArrayList<MonsterData> getMonsters(CacheMeta cacheMeta, int indexStart, int indexEnd, ArrayList<MonsterType> types, Random random) {
         ArrayList<MonsterData> result = null;
 
         for (int i = indexStart; i <= indexEnd; ++i) {
@@ -39,7 +40,7 @@ public class MonstersWave {
             if (type == null) continue;
 
             if (result == null) result = new ArrayList<>();
-            result.add(type.newMonster(cacheMeta, item.getSpawnX(), item.getSpawnY()));
+            result.add(type.newMonster(cacheMeta, item.getSpawnX(), item.getSpawnY(), random));
         }
 
         return result;

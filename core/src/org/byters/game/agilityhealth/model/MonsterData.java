@@ -3,11 +3,14 @@ package org.byters.game.agilityhealth.model;
 import com.badlogic.gdx.math.Vector2;
 import org.byters.game.agilityhealth.MathHelper;
 
+import java.util.Random;
+
 public class MonsterData {
 
-    private final float speed;
-    private final long timeAttackPrepareMillis;
-    private final long attackDurationMillis;
+    private float speed;
+    private long timeAttackPrepareMillis;
+    private long attackDurationMillis;
+    private int id;
     private float x, y;
     private float stamina;
 
@@ -18,7 +21,8 @@ public class MonsterData {
     private float monsterAttackDistanceSquared;
     private float damageValue;
 
-    public MonsterData(float x,
+    public MonsterData(int id,
+                       float x,
                        float y,
                        float stamina,
                        float speed,
@@ -28,7 +32,9 @@ public class MonsterData {
                        long directionCalc,
                        long attackDelayMillis,
                        long attackPrepareMillis,
-                       long attackDurationMillis) {
+                       long attackDurationMillis,
+                       Random random) {
+        this.id = id;
         this.stamina = stamina;
         this.speed = speed;
         monsterAttackDistanceSquared = attackDistanceSquared;
@@ -45,7 +51,7 @@ public class MonsterData {
 
         lastTimeAttackMillis = 0;
         lastTimeStunMillis = 0;
-        lastTimeCalcDirectionMillis = 0;
+        lastTimeCalcDirectionMillis = System.currentTimeMillis() - random.nextInt((int) timeAttackDelayMillis);
     }
 
     public void update(float delta, float heroPosX, float heroPosY) {
@@ -125,5 +131,17 @@ public class MonsterData {
 
     public boolean isStun() {
         return System.currentTimeMillis() - lastTimeStunMillis < timeStunMillis;
+    }
+
+    public int getType() {
+        return id;
+    }
+
+    public long getLastTimeMillisAttack() {
+        return lastTimeAttackMillis;
+    }
+
+    public long getLastTimeMillisStun() {
+        return lastTimeStunMillis;
     }
 }

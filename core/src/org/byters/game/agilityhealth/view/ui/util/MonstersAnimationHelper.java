@@ -1,75 +1,75 @@
 package org.byters.game.agilityhealth.view.ui.util;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import org.byters.engine.controller.ControllerResources;
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheResources;
+import org.byters.game.agilityhealth.controller.data.memorycache.util.MonsterSpawnHelper;
+import org.byters.game.agilityhealth.view.presenter.PresenterScreenGame;
 import org.byters.game.agilityhealth.view.ui.FrameBufferDrawer;
 
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 
 public class MonstersAnimationHelper {
 
-    private WeakReference<FrameBufferDrawer> refFrameBufferDrawer;
-    private WeakReference<CacheResources> refCacheResources;
-    private WeakReference<ControllerResources> refControllerResources;
+    private final WeakReference<MonsterSpawnHelper> refMonsterSpawnHelper;
+    private final WeakReference<ControllerResources> refControllerResources;
+    private final WeakReference<CacheResources> refCacheResources;
+    private final WeakReference<FrameBufferDrawer> refFrameBufferDrawer;
+    private HashMap<Integer, MonsterAnimationTemplate> monsterAnimationHelper;
 
-    private Animation<TextureAtlas.AtlasRegion> animationMove;
-    private TextureAtlas.AtlasRegion tAttack, tStun, tDie;
-    private int moveFrameNum;
 
-    private TextureAtlas tMonsterAtlas;
-
-    public MonstersAnimationHelper(ControllerResources controllerResources, CacheResources cacheMeta, FrameBufferDrawer frameBufferDrawer) {
+    public MonstersAnimationHelper(MonsterSpawnHelper monsterSpawnHelper,
+                                   ControllerResources controllerResources,
+                                   CacheResources cacheResources,
+                                   FrameBufferDrawer frameBufferDrawer) {
+        this.refMonsterSpawnHelper = new WeakReference<>(monsterSpawnHelper);
         this.refControllerResources = new WeakReference<>(controllerResources);
-        this.refCacheResources = new WeakReference<>(cacheMeta);
+        this.refCacheResources = new WeakReference<>(cacheResources);
         this.refFrameBufferDrawer = new WeakReference<>(frameBufferDrawer);
     }
 
+    public void init() {
+
+        monsterAnimationHelper = new HashMap<>();
+        for (int i = 0; i < refMonsterSpawnHelper.get().getMonsterTypesNum(); ++i)
+            monsterAnimationHelper.put(refMonsterSpawnHelper.get().getMonsterType(i),
+                    new MonsterAnimationTemplate(refControllerResources.get(),
+                            refCacheResources.get(),
+                            refFrameBufferDrawer.get(),
+                            refCacheResources.get().TEXTURE_ATLAS_MONSTER[refMonsterSpawnHelper.get().getMonsterType(i)]));
+    }
+
+    public void draw(SpriteBatch spriteBatch, PresenterScreenGame presenterScreenGame) {
+        for (int i = 0; i < presenterScreenGame.getMonstersNum(); ++i) {
+
+            TextureAtlas.AtlasRegion texture = monsterAnimationHelper.get(presenterScreenGame.getMonsterType(i)).
+                    getTextureCurrent(presenterScreenGame.isMonsterAttack(i),
+                            presenterScreenGame.isMonsterStun(i),
+                            presenterScreenGame.getMonsterLastTimeAttackMillis(i),
+                            presenterScreenGame.getMonsterLastTimeStunMillis(i));
+
+
+            monsterAnimationHelper.get(presenterScreenGame.getMonsterType(i)).draw(spriteBatch,
+                    texture,
+                    presenterScreenGame.getMonsterPosX(i),
+                    presenterScreenGame.getMonsterPosY(i),
+                    presenterScreenGame.isMonsterDirectionRight(i));
+        }
+    }
+
     public void load() {
-        tMonsterAtlas = new TextureAtlas(refCacheResources.get().TEXTURE_ATLAS_MONSTER);
-
-        tAttack = tMonsterAtlas.findRegion(refCacheResources.get().REGION_MONSTER_ATTACK);
-        tStun = tMonsterAtlas.findRegion(refCacheResources.get().REGION_MONSTER_STUN);
-        tDie = tMonsterAtlas.findRegion(refCacheResources.get().REGION_MONSTER_DIE);
-
-        animationMove = new Animation<>(
-                1 / refCacheResources.get().ANIMATION_MONSTER_MOVE_FPS,
-                tMonsterAtlas.findRegions(refCacheResources.get().REGION_MONSTER_MOVE));
-        animationMove.setPlayMode(Animation.PlayMode.LOOP);
-    }
-
-    public void draw(SpriteBatch spriteBatch,
-                     float monsterPosX,
-                     float monsterPosY,
-                     boolean isRight,
-                     boolean isAttack,
-                     boolean isStun) {
-
-        TextureAtlas.AtlasRegion texture = animationMove.getKeyFrames()[moveFrameNum];
-        if (isAttack)
-            texture = tAttack;
-        if (isStun)
-            texture = tStun;
-
-
-        DrawHelper.draw(spriteBatch,
-                texture,
-                monsterPosX - texture.offsetX,
-                monsterPosY - texture.offsetY,
-                isRight);
-    }
-
-    public void update(float delta) {
-        moveFrameNum = animationMove.getKeyFrameIndex(((int) (System.currentTimeMillis() - refControllerResources.get().getGameTimeStartMillis())) / 1000f);
+        for (Integer key : monsterAnimationHelper.keySet())
+            monsterAnimationHelper.get(key).load();
     }
 
     public void dispose() {
-        tMonsterAtlas.dispose();
+        for (Integer key : monsterAnimationHelper.keySet())
+            monsterAnimationHelper.get(key).dispose();
     }
 
-    public void addCorpse(float posX, float posY) {
-        refFrameBufferDrawer.get().addTexture(tDie, posX - tDie.offsetX, posY - tDie.offsetY);
+    public void addCorpse(int type, float posX, float posY) {
+        monsterAnimationHelper.get(type).addCorpse(posX, posY);
     }
 }

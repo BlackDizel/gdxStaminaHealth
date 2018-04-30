@@ -52,7 +52,7 @@ public class CacheMonsters {
                 item.checkAttacked(attackPosX, attackPosY, attackDistanceSquared, damageValue);
 
             if (item.isDie()) {
-                monstersAnimationHelper.addCorpse(item.getPosX(), item.getPosY());
+                monstersAnimationHelper.addCorpse(item.getType(), item.getPosX(), item.getPosY());
                 itr.remove();
                 continue;
             }
@@ -123,5 +123,17 @@ public class CacheMonsters {
 
     public boolean isMonsterStun(int position) {
         return data == null || data.size() <= position ? false : data.get(position).isStun();
+    }
+
+    public int getMonsterType(int position) {
+        return data == null || data.size() <= position ? 0 : data.get(position).getType();
+    }
+
+    public long getMonsterLastTimeMillisAttack(int position) {
+        return data == null || data.size() <= position ? 0 : data.get(position).getLastTimeMillisAttack();
+    }
+
+    public long getMonsterLastTimeMillisStun(int position) {
+        return data == null || data.size() <= position ? 0 : data.get(position).getLastTimeMillisStun();
     }
 }

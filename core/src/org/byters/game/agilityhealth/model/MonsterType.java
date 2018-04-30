@@ -2,6 +2,8 @@ package org.byters.game.agilityhealth.model;
 
 import org.byters.game.agilityhealth.controller.data.memorycache.CacheMeta;
 
+import java.util.Random;
+
 public class MonsterType {
     private String title;
     private int id;
@@ -18,8 +20,9 @@ public class MonsterType {
         return this.id == id;
     }
 
-    public MonsterData newMonster(CacheMeta cacheMeta, float spawnX, float spawnY) {
+    public MonsterData newMonster(CacheMeta cacheMeta, float spawnX, float spawnY, Random random) {
         return new MonsterData(
+                id,
                 spawnX,
                 spawnY,
                 stamina,
@@ -30,7 +33,12 @@ public class MonsterType {
                 directionCalcDelay,
                 attackDelay,
                 attackPrepareMillis,
-                attackDurationMillis);
+                attackDurationMillis,
+                random);
 
+    }
+
+    public int getId() {
+        return id;
     }
 }

@@ -18,7 +18,14 @@ public class DrawHelper {
         spriteBatch.draw(texture, x - texture.getRegionWidth() / 2, y - texture.getRegionHeight() / 2, texture.getRegionWidth() * (isRight ? 1 : -1), texture.getRegionHeight());
     }
 
-    public static void draw(SpriteBatch spriteBatch, TextureAtlas.AtlasRegion texture, float x, float y, boolean isRight) {
-        spriteBatch.draw(texture, x, y, texture.getRegionWidth() * (isRight ? 1 : -1), texture.getRegionHeight());
+    public static void draw(SpriteBatch spriteBatch,
+                            TextureAtlas.AtlasRegion texture,
+                            float x,
+                            float xOffset,
+                            float y,
+                            float yOffset,
+                            boolean isRight) {
+        float xPos = x + (isRight ? -xOffset : +xOffset);
+        spriteBatch.draw(texture, xPos, y - yOffset, texture.getRegionWidth() * (isRight ? 1 : -1), texture.getRegionHeight());
     }
 }

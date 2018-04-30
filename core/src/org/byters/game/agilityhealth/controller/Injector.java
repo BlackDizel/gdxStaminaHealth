@@ -50,13 +50,22 @@ public class Injector {
             screenGame = new ScreenGame(getPresenterScreenGame(),
                     getInputSetting(),
                     getInputHelper(),
-                    engine.getInjector().getControllerResources().getSpriteBatch(),
                     getHelperResources(),
                     getCacheMeta(),
                     getHeroAnimationHelper(),
-                    getMonsterAnimationHelper(),
-                    getFrameBufferDrawer());
+                    getFrameBufferDrawer(),
+                    engine.getInjector().getControllerResources(),
+                    getMonsterDrawerHelper());
         return screenGame;
+    }
+
+    private MonstersAnimationHelper getMonsterDrawerHelper() {
+        if (monsterAnimationHelper == null) monsterAnimationHelper = new MonstersAnimationHelper(
+                getMonstersSpawnHelper(),
+                getEngine().getInjector().getControllerResources(),
+                getHelperResources(),
+                getFrameBufferDrawer());
+        return monsterAnimationHelper;
     }
 
     private FrameBufferDrawer getFrameBufferDrawer() {
@@ -64,12 +73,6 @@ public class Injector {
                 engine.getInjector().getControllerResources().getSpriteBatch(),
                 getCacheMeta());
         return frameBufferDrawer;
-    }
-
-    private MonstersAnimationHelper getMonsterAnimationHelper() {
-        if (monsterAnimationHelper == null)
-            monsterAnimationHelper = new MonstersAnimationHelper(engine.getInjector().getControllerResources(), getHelperResources(), getFrameBufferDrawer());
-        return monsterAnimationHelper;
     }
 
     private HeroAnimationHelper getHeroAnimationHelper() {
@@ -157,16 +160,18 @@ public class Injector {
     public void init() {
         getEngine().load();
         getViewGUI().load();
-        getNavigator().navigateScreen(getScreenMenu());
         getMonstersSpawnHelper().load();
+        getMonsterDrawerHelper().init();
         engine.getInjector().getControllerCamera().setZoom(getCacheMeta().cameraZoom);
+        getNavigator().navigateScreen(getScreenMenu());
     }
 
     private MonsterSpawnHelper getMonstersSpawnHelper() {
         if (monsterSpawnHelper == null)
             monsterSpawnHelper = new MonsterSpawnHelper(getHelperResources(),
                     getCacheMeta(),
-                    engine.getInjector().getControllerJsonBase());
+                    engine.getInjector().getControllerJsonBase(),
+                    engine.getInjector().getRandom());
         return monsterSpawnHelper;
     }
 

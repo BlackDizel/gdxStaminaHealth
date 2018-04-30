@@ -169,4 +169,16 @@ public class PresenterScreenGame {
     public boolean isMonsterStun(int position) {
         return refCacheMonsters.get().isMonsterStun(position);
     }
+
+    public int getMonsterType(int position) {
+        return refCacheMonsters.get().getMonsterType(position);
+    }
+
+    public long getMonsterLastTimeAttackMillis(int position) {
+        return refCacheMonsters.get().getMonsterLastTimeMillisAttack(position);
+    }
+
+    public long getMonsterLastTimeStunMillis(int position) {
+        return refCacheMonsters.get().getMonsterLastTimeMillisStun(position);
+    }
 }
